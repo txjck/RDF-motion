@@ -260,12 +260,11 @@
     margin: 0;
     line-height: 1.1;
     opacity: 0;
-    transition: opacity 0.4s var(--ae-ease);
+    transition: opacity 0.2s var(--ae-ease);
   }
 
   .view-in .page-title {
     opacity: 1;
-    transition-delay: 0.04s;
   }
 
   .page-subtitle {
@@ -275,12 +274,11 @@
     margin-top: 6px;
     margin-bottom: 24px;
     opacity: 0;
-    transition: opacity 0.4s var(--ae-ease);
+    transition: opacity 0.2s var(--ae-ease);
   }
 
   .view-in .page-subtitle {
     opacity: 1;
-    transition-delay: 0.08s;
   }
 
   .text-blue {
@@ -301,12 +299,11 @@
     align-items: center;
     gap: 4px;
     opacity: 0;
-    transition: opacity 0.4s var(--ae-ease);
+    transition: opacity 0.2s var(--ae-ease);
   }
 
   .view-in .back-link {
     opacity: 1;
-    transition-delay: 0.02s;
   }
 
   .back-link:active {
@@ -319,7 +316,7 @@
     stroke-width: 2.2;
   }
 
-  /* ---------- Options Box Simultaneous Fade ---------- */
+  /* ---------- Options Box Simultaneous 0.2s Fade & Thicker Border ---------- */
 
   .options-list {
     display: flex;
@@ -334,7 +331,7 @@
     height: 42px;
     padding: 0 16px;
     background: #ffffff;
-    border: 0.5px solid #86868B;
+    border: 1px solid #86868B;
     border-radius: 8px;
     font-size: 16px;
     font-weight: 400;
@@ -342,7 +339,7 @@
     cursor: pointer;
     opacity: 0;
     transition:
-      opacity 0.4s var(--ae-ease) 0.12s,
+      opacity 0.2s linear,
       border-color 0.2s ease,
       background-color 0.2s ease,
       transform 0.15s ease;
@@ -358,7 +355,7 @@
 
   .offer-box.selected {
     border-color: var(--blue);
-    border-width: 1px;
+    border-width: 1.5px;
     background: rgba(0, 113, 227, 0.03);
   }
 
