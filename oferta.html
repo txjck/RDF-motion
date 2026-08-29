@@ -69,11 +69,9 @@
   @keyframes aeReveal {
     0% {
       opacity: 0;
-      transform: translateY(6px);
     }
     100% {
       opacity: 1;
-      transform: translateY(0);
     }
   }
 
@@ -84,7 +82,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 24px 0 16px 0;
-    animation: aeReveal 0.6s var(--ae-ease) forwards;
+    animation: aeReveal 0.4s ease forwards;
     position: relative;
     z-index: 2001;
   }
@@ -161,16 +159,12 @@
     padding: 120px 0 0 32px;
     opacity: 0;
     pointer-events: none;
-    transform: translateY(-10px);
-    transition:
-      opacity 0.4s var(--ae-ease),
-      transform 0.4s var(--ae-ease);
+    transition: opacity 0.4s var(--ae-ease);
   }
 
   .mobile-nav.is-open {
     opacity: 1;
     pointer-events: auto;
-    transform: translateY(0);
   }
 
   .mobile-nav-list {
@@ -187,15 +181,11 @@
 
   .mobile-nav-list li {
     opacity: 0;
-    transform: translateY(16px);
-    transition:
-      opacity 0.4s ease,
-      transform 0.4s ease;
+    transition: opacity 0.4s ease;
   }
 
   .mobile-nav.is-open .mobile-nav-list li {
     opacity: 1;
-    transform: translateY(0);
   }
 
   .mobile-nav.is-open .mobile-nav-list li:nth-child(1) {
@@ -262,9 +252,6 @@
   }
 
   /* ---------- Apple Motion View Elements ---------- */
-  /* Transition-based (not keyframe) so re-entering a view is always
-     smooth, not just the first time. Triggered via the .view-in class,
-     added by JS one frame after the view becomes visible. */
 
   .page-title {
     font-size: 42px;
@@ -273,16 +260,11 @@
     margin: 0;
     line-height: 1.1;
     opacity: 0;
-    transform: translateY(10px);
-    transition:
-      opacity 0.5s var(--ae-ease),
-      transform 0.5s var(--ae-ease);
+    transition: opacity 0.8s ease;
   }
 
   .view-in .page-title {
     opacity: 1;
-    transform: translateY(0);
-    transition-delay: 0.06s;
   }
 
   .page-subtitle {
@@ -292,16 +274,11 @@
     margin-top: 6px;
     margin-bottom: 24px;
     opacity: 0;
-    transform: translateY(10px);
-    transition:
-      opacity 0.5s var(--ae-ease),
-      transform 0.5s var(--ae-ease);
+    transition: opacity 0.8s ease;
   }
 
   .view-in .page-subtitle {
     opacity: 1;
-    transform: translateY(0);
-    transition-delay: 0.12s;
   }
 
   .text-blue {
@@ -322,12 +299,11 @@
     align-items: center;
     gap: 4px;
     opacity: 0;
-    transition: opacity 0.4s var(--ae-ease);
+    transition: opacity 0.8s ease;
   }
 
   .view-in .back-link {
     opacity: 1;
-    transition-delay: 0.02s;
   }
 
   .back-link:active {
@@ -355,47 +331,31 @@
     height: 42px;
     padding: 0 16px;
     background: #ffffff;
-    border: 1px solid #000000;
+    border: 0.5px solid #86868B;
     border-radius: 8px;
     font-size: 16px;
     font-weight: 400;
     color: #000000;
     cursor: pointer;
     opacity: 0;
-    transform: translateY(10px);
     transition:
-      opacity 0.5s var(--ae-ease),
-      transform 0.5s var(--ae-ease),
+      opacity 0.8s ease,
       border-color 0.2s ease,
-      background-color 0.2s ease;
+      background-color 0.2s ease,
+      transform 0.15s ease;
   }
 
-  .view-in .offer-box:nth-child(1) {
+  .view-in .offer-box {
     opacity: 1;
-    transform: translateY(0);
-    transition-delay: 0.16s;
-  }
-
-  .view-in .offer-box:nth-child(2) {
-    opacity: 1;
-    transform: translateY(0);
-    transition-delay: 0.22s;
-  }
-
-  .view-in .offer-box:nth-child(3) {
-    opacity: 1;
-    transform: translateY(0);
-    transition-delay: 0.28s;
   }
 
   .offer-box:active {
     transform: scale(0.98);
-    transition-duration: 0.15s;
   }
 
   .offer-box.selected {
     border-color: var(--blue);
-    border-width: 1.5px;
+    border-width: 1px;
     background: rgba(0, 113, 227, 0.03);
   }
 
@@ -407,7 +367,11 @@
     margin: 0 auto;
     z-index: 10;
     opacity: 0;
-    animation: aeReveal 0.6s var(--ae-ease) 0.45s forwards;
+    transition: opacity 0.8s ease;
+  }
+
+  .view-in .submit-wrap {
+    opacity: 1;
   }
 
   .submit-btn {
@@ -474,7 +438,6 @@
       padding: 0;
       opacity: 1;
       pointer-events: auto;
-      transform: none;
       transition: none;
     }
 
@@ -487,7 +450,6 @@
 
     .mobile-nav-list li {
       opacity: 1;
-      transform: none;
       transition: none;
     }
 
@@ -717,7 +679,7 @@
           stroke-linecap="round"
           stroke-linejoin="round"
         >
-          <path d="M15 18l-6 6-6"/>
+          <path d="M15 18l-6-6 6-6"/>
         </svg>
 
         <span>powrót do oferty</span>
@@ -754,7 +716,9 @@
   </div>
 
   <!-- ---------- PRZYCISK NA DOLE ---------- -->
-
+  <!-- Przeniesiony do środka .app-content w strukturze logicznej, ale stylowany tak by był na dole -->
+  <!-- Dodałem klasę 'view-in' zarządzaną przez JS również dla tego elementu -->
+  
   <div class="submit-wrap">
     <button
       class="submit-btn disabled-btn"
@@ -808,17 +772,17 @@
   // ---------- APP FLOW LOGIC ----------
 
   const actionBtn = document.getElementById('action-btn');
+  const submitWrap = document.querySelector('.submit-wrap');
 
-  // Plays the staggered entrance smoothly every time, not just on the
-  // first run: we force a reflow before adding the class that starts
-  // the transition, so the browser always has a committed "from" state.
   function activateView(view) {
     view.classList.remove('view-in');
-    void view.offsetWidth;
+    submitWrap.classList.remove('view-in');
+    void view.offsetWidth; // wymuszenie przerysowania przeglądarki
 
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         view.classList.add('view-in');
+        submitWrap.classList.add('view-in');
       });
     });
   }
@@ -868,7 +832,6 @@
     if (actionBtn.classList.contains('disabled-btn')) return;
   });
 
-  // Play the entrance animation for the initial view on load too.
   activateView(document.getElementById('view-oferta'));
 
 </script>
