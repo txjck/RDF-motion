@@ -121,17 +121,15 @@
     display: block;
     width: 100%;
     height: 2px;
-    /* Kolor zmieniony na czarny, aby był widoczny na białym tle */
     background-color: #000000;
     border-radius: 4px;
-    /* Brak opóźnień (lagów), płynne przejście transformacji */
     transition:
-      transform 0.3s ease,
+      transform 0.4s var(--ae-ease),
       opacity 0.3s ease,
       background-color 0.3s ease;
   }
 
-  /* Animacja otwierania (krzyżyk) */
+  /* ANIMATION STATES WHEN 'is-open' CLASS IS ADDED */
   .burger-menu.is-open span:nth-child(1) {
     transform: translateY(7px) rotate(45deg);
   }
@@ -144,7 +142,7 @@
     transform: translateY(-7px) rotate(-45deg);
   }
 
-  /* ---------- Mobile Navigation ---------- */
+  /* ---------- Mobile Navigation (High-End Apple Motion Style) ---------- */
 
   .mobile-nav {
     position: fixed;
@@ -160,13 +158,24 @@
     justify-content: flex-start;
     padding: 120px 0 0 32px;
     opacity: 0;
+    transform: translateY(-12px);
+    filter: blur(8px);
     pointer-events: none;
-    transition: opacity 0.4s var(--ae-ease);
+    transition: 
+      opacity 0.5s var(--ae-ease),
+      transform 0.5s var(--ae-ease),
+      filter 0.5s var(--ae-ease);
   }
 
   .mobile-nav.is-open {
     opacity: 1;
+    transform: translateY(0);
+    filter: blur(0px);
     pointer-events: auto;
+    transition: 
+      opacity 0.5s var(--ae-ease),
+      transform 0.5s var(--ae-ease),
+      filter 0.5s var(--ae-ease);
   }
 
   .mobile-nav-list {
@@ -183,17 +192,45 @@
 
   .mobile-nav-list li {
     opacity: 0;
-    transition: opacity 0.4s ease;
+    transform: translateY(28px) scale(0.97);
+    filter: blur(6px);
+    transition: 
+      opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      filter 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .mobile-nav.is-open .mobile-nav-list li {
+  /* Stagger przy otwieraniu (od góry do dołu) z delikatnym opóźnieniem tła menu */
+  .mobile-nav.is-open .mobile-nav-list li:nth-child(1) {
     opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
+    transition-delay: 0.08s;
+  }
+  .mobile-nav.is-open .mobile-nav-list li:nth-child(2) {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
+    transition-delay: 0.155s;
+  }
+  .mobile-nav.is-open .mobile-nav-list li:nth-child(3) {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
+    transition-delay: 0.230s;
+  }
+  .mobile-nav.is-open .mobile-nav-list li:nth-child(4) {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
+    transition-delay: 0.305s;
   }
 
-  .mobile-nav.is-open .mobile-nav-list li:nth-child(1) { transition-delay: 0.08s; }
-  .mobile-nav.is-open .mobile-nav-list li:nth-child(2) { transition-delay: 0.13s; }
-  .mobile-nav.is-open .mobile-nav-list li:nth-child(3) { transition-delay: 0.18s; }
-  .mobile-nav.is-open .mobile-nav-list li:nth-child(4) { transition-delay: 0.23s; }
+  /* Zamykanie menu - odwrotna kolejność (od dołu do góry) i krótszy czas */
+  .mobile-nav-list li:nth-child(1) { transition-delay: 0.21s; }
+  .mobile-nav-list li:nth-child(2) { transition-delay: 0.14s; }
+  .mobile-nav-list li:nth-child(3) { transition-delay: 0.07s; }
+  .mobile-nav-list li:nth-child(4) { transition-delay: 0s; }
 
   .mobile-nav-list button,
   .mobile-nav-list a {
@@ -413,6 +450,8 @@
       align-items: center;
       padding: 0;
       opacity: 1;
+      transform: none !important;
+      filter: none !important;
       pointer-events: auto;
       transition: none;
     }
@@ -426,6 +465,8 @@
 
     .mobile-nav-list li {
       opacity: 1;
+      transform: none !important;
+      filter: none !important;
       transition: none;
     }
 
@@ -459,6 +500,19 @@
       max-width: 400px;
     }
   }
+
+  /* ---------- Accessibility: Reduced Motion ---------- */
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-nav,
+    .mobile-nav.is-open,
+    .mobile-nav-list li,
+    .mobile-nav.is-open .mobile-nav-list li {
+      transition: none !important;
+      transform: none !important;
+      filter: none !important;
+      opacity: 1 !important;
+    }
+  }
 </style>
 
 </head>
@@ -478,7 +532,6 @@
       >
     </div>
 
-    <!-- Burger Menu Button -->
     <button
       type="button"
       class="burger-menu"
@@ -492,8 +545,6 @@
     </button>
 
   </header>
-
-  <!-- ---------- NAVIGATION ---------- -->
 
   <nav class="mobile-nav" id="mobile-nav" aria-hidden="true">
 
@@ -521,8 +572,6 @@
 
   <div class="app-content">
 
-    <!-- ---------- WIDOK GŁÓWNY - OFERTA ---------- -->
-
     <div class="view active-view" id="view-oferta">
 
       <h1 class="page-title">Oferta</h1>
@@ -548,8 +597,6 @@
       </div>
 
     </div>
-
-    <!-- ---------- WIDOK - ZDJĘCIA ---------- -->
 
     <div class="view" id="view-zdjecia">
 
@@ -596,8 +643,6 @@
 
     </div>
 
-    <!-- ---------- WIDOK - FILM ---------- -->
-
     <div class="view" id="view-film">
 
       <a class="back-link" onclick="goBack()">
@@ -642,8 +687,6 @@
       </div>
 
     </div>
-
-    <!-- ---------- WIDOK - FILM + ZDJĘCIA ---------- -->
 
     <div class="view" id="view-film-zdjecia">
 
@@ -692,8 +735,6 @@
 
   </div>
 
-  <!-- ---------- PRZYCISK NA DOLE ---------- -->
-
   <div class="submit-wrap">
     <button
       class="submit-btn disabled-btn"
@@ -705,10 +746,6 @@
 
 </div>
 
-<!-- ==========================================================
-     MENU + APP FLOW
-     ========================================================== -->
-
 <script>
 
   // ---------- MENU NAVIGATION ----------
@@ -718,7 +755,6 @@
   const navLinks = mobileNav.querySelectorAll('.mobile-nav-list a');
 
   function openMenu() {
-    // This part adds the 'is-open' class that triggers the CSS animation
     burgerToggle.classList.add('is-open');
     mobileNav.classList.add('is-open');
     burgerToggle.setAttribute('aria-expanded', 'true');
@@ -727,7 +763,6 @@
   }
 
   function closeMenu() {
-    // This part removes the 'is-open' class
     burgerToggle.classList.remove('is-open');
     mobileNav.classList.remove('is-open');
     burgerToggle.setAttribute('aria-expanded', 'false');
