@@ -82,7 +82,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 24px 0 16px 0;
-    animation: aeReveal 0.4s ease forwards;
+    animation: aeReveal 0.6s var(--ae-ease) forwards;
     position: relative;
     z-index: 2001;
   }
@@ -260,11 +260,12 @@
     margin: 0;
     line-height: 1.1;
     opacity: 0;
-    transition: opacity 0.8s ease;
+    transition: opacity 0.4s var(--ae-ease);
   }
 
   .view-in .page-title {
     opacity: 1;
+    transition-delay: 0.04s;
   }
 
   .page-subtitle {
@@ -274,11 +275,12 @@
     margin-top: 6px;
     margin-bottom: 24px;
     opacity: 0;
-    transition: opacity 0.8s ease;
+    transition: opacity 0.4s var(--ae-ease);
   }
 
   .view-in .page-subtitle {
     opacity: 1;
+    transition-delay: 0.08s;
   }
 
   .text-blue {
@@ -299,11 +301,12 @@
     align-items: center;
     gap: 4px;
     opacity: 0;
-    transition: opacity 0.8s ease;
+    transition: opacity 0.4s var(--ae-ease);
   }
 
   .view-in .back-link {
     opacity: 1;
+    transition-delay: 0.02s;
   }
 
   .back-link:active {
@@ -331,7 +334,7 @@
     height: 42px;
     padding: 0 16px;
     background: #ffffff;
-    border: 1px solid #86868B;
+    border: 0.5px solid #86868B;
     border-radius: 8px;
     font-size: 16px;
     font-weight: 400;
@@ -339,14 +342,25 @@
     cursor: pointer;
     opacity: 0;
     transition:
-      opacity 0.8s ease,
+      opacity 0.4s var(--ae-ease),
       border-color 0.2s ease,
       background-color 0.2s ease,
       transform 0.15s ease;
   }
 
-  .view-in .offer-box {
+  .view-in .offer-box:nth-child(1) {
     opacity: 1;
+    transition-delay: 0.12s;
+  }
+
+  .view-in .offer-box:nth-child(2) {
+    opacity: 1;
+    transition-delay: 0.16s;
+  }
+
+  .view-in .offer-box:nth-child(3) {
+    opacity: 1;
+    transition-delay: 0.20s;
   }
 
   .offer-box:active {
@@ -367,11 +381,7 @@
     margin: 0 auto;
     z-index: 10;
     opacity: 0;
-    transition: opacity 0.8s ease;
-  }
-
-  .view-in .submit-wrap {
-    opacity: 1;
+    animation: aeReveal 0.6s var(--ae-ease) 0.3s forwards;
   }
 
   .submit-btn {
@@ -716,9 +726,7 @@
   </div>
 
   <!-- ---------- PRZYCISK NA DOLE ---------- -->
-  <!-- Przeniesiony do środka .app-content w strukturze logicznej, ale stylowany tak by był na dole -->
-  <!-- Dodałem klasę 'view-in' zarządzaną przez JS również dla tego elementu -->
-  
+
   <div class="submit-wrap">
     <button
       class="submit-btn disabled-btn"
@@ -772,17 +780,14 @@
   // ---------- APP FLOW LOGIC ----------
 
   const actionBtn = document.getElementById('action-btn');
-  const submitWrap = document.querySelector('.submit-wrap');
 
   function activateView(view) {
     view.classList.remove('view-in');
-    submitWrap.classList.remove('view-in');
-    void view.offsetWidth; // wymuszenie przerysowania przeglądarki
+    void view.offsetWidth;
 
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         view.classList.add('view-in');
-        submitWrap.classList.add('view-in');
       });
     });
   }
