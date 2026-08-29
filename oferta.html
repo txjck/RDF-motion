@@ -161,12 +161,16 @@
     padding: 120px 0 0 32px;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.4s var(--ae-ease);
+    transform: translateY(-10px);
+    transition:
+      opacity 0.4s var(--ae-ease),
+      transform 0.4s var(--ae-ease);
   }
 
   .mobile-nav.is-open {
     opacity: 1;
     pointer-events: auto;
+    transform: translateY(0);
   }
 
   .mobile-nav-list {
@@ -183,11 +187,15 @@
 
   .mobile-nav-list li {
     opacity: 0;
-    transition: opacity 0.4s ease;
+    transform: translateY(16px);
+    transition:
+      opacity 0.4s ease,
+      transform 0.4s ease;
   }
 
   .mobile-nav.is-open .mobile-nav-list li {
     opacity: 1;
+    transform: translateY(0);
   }
 
   .mobile-nav.is-open .mobile-nav-list li:nth-child(1) { transition-delay: 0.08s; }
@@ -414,6 +422,7 @@
       padding: 0;
       opacity: 1;
       pointer-events: auto;
+      transform: none;
       transition: none;
     }
 
@@ -426,6 +435,7 @@
 
     .mobile-nav-list li {
       opacity: 1;
+      transform: none;
       transition: none;
     }
 
