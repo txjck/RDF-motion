@@ -251,7 +251,6 @@
                  BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
 
     font-size: 30px;
-    /* Phone specific bold weight */
     font-weight: 700;
     letter-spacing: -0.5px;
 
@@ -289,6 +288,26 @@
 
     margin: 0;
     letter-spacing: -0.5px;
+  }
+
+  /* ---------- Selection summary ---------- */
+
+  .selection-summary {
+    margin: 0 0 28px 0;
+    padding: 14px 16px;
+    background: #0F0F0F;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #D9D9D9;
+    line-height: 1.4;
+    display: none;
+
+    opacity: 0;
+    animation: aeReveal 0.5s var(--ae-ease) 0.12s forwards;
+  }
+
+  .selection-summary b {
+    color: #ffffff;
   }
 
   /* ---------- Form ---------- */
@@ -405,8 +424,6 @@
     border-radius: 8px;
 
     font-size: 17px;
-
-    /* REGULAR — NOT BOLD */
     font-weight: 400;
 
     font-family: inherit;
@@ -549,11 +566,9 @@
       height: 28px;
     }
 
-    /* Desktop navigation buttons with regular font-weight and increased spacing */
     .mobile-nav-list a,
     .mobile-nav-list button {
       font-size: 15px;
-      /* Desktop regular weight */
       font-weight: 400;
       letter-spacing: -0.2px;
       line-height: 28px;
@@ -581,12 +596,17 @@
 
     .hero {
       margin-top: 113px;
-      margin-bottom: 69px;
+      margin-bottom: 32px;
       text-align: center;
     }
 
     .hero h1 br {
       display: none;
+    }
+
+    .selection-summary {
+      max-width: 414px;
+      margin: 0 auto 37px auto;
     }
 
     /* ---------- Desktop Form ---------- */
@@ -649,758 +669,132 @@ aria-hidden="true"></canvas>
   <header class="header">
     <div class="logo">
       <img
-        src="https://uploads.onecompiler.io/44h4mcb6e/44uj3jqmd/Groupewqeqw%20267.png" 
-        alt="Logo" 
-      > 
-    </div> 
-   
-    <button 
-      type="button" 
-      class="burger-menu" 
-      id="burger-toggle" 
-      aria-label="Otwórz menu" 
-      aria-expanded="false" 
-    > 
-      <span></span> 
-      <span></span> 
-      <span></span> 
-    </button> 
-  </header> 
- 
-  <nav 
-    class="mobile-nav" 
-    id="mobile-nav" 
-    aria-hidden="true" 
-  > 
-    <ul class="mobile-nav-list"> 
-      <li> 
-        <button type="button" onclick="window.location.href='#start'">Start</button> 
-      </li> 
-      <li> 
-        <button type="button" onclick="window.location.href='#portfolio'">Portfolio</button> 
-      </li> 
-      <li> 
-        <button type="button" onclick="window.location.href='#oferta'">Oferta</button> 
-      </li> 
-      <li> 
-        <button type="button" onclick="window.location.href='#kontakt'">Kontakt</button> 
-      </li> 
-    </ul> 
-  </nav> 
- 
-  <section class="hero"> 
-    <h1> 
-      Skontaktuj się z<br>nami: 
-    </h1> 
-  </section> 
- 
-  <form 
-    class="contact-form" 
-    id="contact-form" 
-  > 
-    <div class="field"> 
-      <label for="name"> 
-        Twoje imię 
-      </label> 
-      <input 
-        type="text" 
-        id="name" 
-        name="name" 
-        placeholder="Twoje imię" 
-        required 
-      > 
-    </div> 
-
-    <div class="field"> 
-      <label for="phone"> 
-        Numer telefonu 
-      </label> 
-      <input 
-        type="tel" 
-        id="phone" 
-        name="phone" 
-        placeholder="Numer telefonu" 
-        required 
-      > 
-    </div> 
-
-    <div class="field"> 
-      <label for="email"> 
-        Email 
-      </label> 
-      <input 
-        type="email" 
-        id="email" 
-        name="email" 
-        placeholder="Email" 
-        required 
-      > 
-    </div> 
-
-    <div class="field"> 
-      <label for="message"> 
-        Wiadomość 
-      </label> 
-      <textarea 
-        id="message" 
-        name="message" 
-        placeholder="Twoja wiadomość..." 
-        required 
-      ></textarea> 
-    </div> 
-
-    <div 
-      class="submit-wrap" 
-      id="submit-wrap" 
-    > 
-      <button 
-        type="submit" 
-        class="submit-btn" 
-        id="submit-btn" 
-      > 
-        Wyślij 
-      </button> 
-
-      <div 
-        class="status-msg" 
-        id="status-msg" 
-      ></div> 
-    </div> 
-  </form> 
-</div> 
-
-<script> 
-  const burgerToggle = document.getElementById('burger-toggle'); 
-  const mobileNav = document.getElementById('mobile-nav'); 
-  const navButtons = mobileNav.querySelectorAll('.mobile-nav-list button'); 
-
-  function openMenu() { 
-    burgerToggle.classList.add('is-open'); 
-    mobileNav.classList.add('is-open'); 
-    burgerToggle.setAttribute('aria-expanded', 'true'); 
-    mobileNav.setAttribute('aria-hidden', 'false'); 
-    document.body.classList.add('no-scroll'); 
-    document.body.classList.add('menu-open'); 
-  } 
-
-  function closeMenu() { 
-    burgerToggle.classList.remove('is-open'); 
-    mobileNav.classList.remove('is-open'); 
-    burgerToggle.setAttribute('aria-expanded', 'false'); 
-    mobileNav.setAttribute('aria-hidden', 'true'); 
-    document.body.classList.remove('no-scroll'); 
-    document.body.classList.remove('menu-open'); 
-  } 
-
-  burgerToggle.addEventListener('click', function () { 
-    if (mobileNav.classList.contains('is-open')) { 
-      closeMenu(); 
-    } else { 
-      openMenu(); 
-    } 
-  }); 
-
-  navButtons.forEach(function (btn) { 
-    btn.addEventListener('click', closeMenu); 
-  }); 
-
-  const form = document.getElementById('contact-form'); 
-  const submitBtn = document.getElementById('submit-btn'); 
-  const statusMsg = document.getElementById('status-msg'); 
-  const submitWrap = document.getElementById('submit-wrap'); 
-  const inputs = form.querySelectorAll('input, textarea'); 
-
-  function checkInput() { 
-    let hasText = false; 
-    inputs.forEach(function (input) { 
-      if (input.value.trim().length > 0) { 
-        hasText = true; 
-      } 
-    }); 
-
-    if (hasText) { 
-      submitWrap.style.display = 'block'; 
-    } else { 
-      submitWrap.style.display = 'none'; 
-    } 
-  } 
-
-  checkInput(); 
-
-  inputs.forEach(function (input) { 
-    input.addEventListener('input', checkInput); 
-  }); 
-
-  form.addEventListener('submit', function (e) { 
-    e.preventDefault(); 
-    submitBtn.disabled = true; 
-    submitBtn.textContent = 'Wysyłanie...'; 
-
-    setTimeout(function () { 
-      statusMsg.textContent = 'Wiadomość została wysłana!'; 
-      submitBtn.disabled = false; 
-      submitBtn.textContent = 'Wyślij'; 
-      form.reset(); 
-
-      setTimeout(function () { 
-        statusMsg.style.opacity = '0'; 
-        setTimeout(function () { 
-          statusMsg.textContent = ''; 
-          statusMsg.style.opacity = '1'; 
-          checkInput(); 
-        }, 300); 
-      }, 3000); 
-    }, 700); 
-  }); 
-</script> 
-  
-<script> 
-  (function () { 
-    var canvas = document.getElementById('dotField'); 
-    if (!canvas || !canvas.getContext) { 
-      return; 
-    } 
-
-    var ctx = canvas.getContext('2d'); 
-    var dpr = Math.min(window.devicePixelRatio || 1, 2); 
-    var width = 0; 
-    var height = 0; 
-    var AMOUNTX = 65; 
-    var AMOUNTY = 50; 
-    var SEPARATION = 35; 
-    var RADIUS = 1.15; 
-    var count = 0; 
-    var interactionPulse = 0; 
-    var interactionFactor = 0; 
-    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; 
-
-    var startTime = Date.now(); 
-    var introDuration = 3500; 
-
-    window.triggerWaveInteraction = function () { 
-      interactionPulse = Math.min(interactionPulse + 0.6, 1.4); 
-    }; 
-
-    document.addEventListener('input', function (e) { 
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') { 
-        window.triggerWaveInteraction(); 
-      } 
-    }); 
-
-    document.addEventListener('click', function (e) { 
-      if (e.target.closest('button') || e.target.closest('.submit-btn') || e.target.closest('.burger-menu')) { 
-        window.triggerWaveInteraction(); 
-      } 
-    }); 
-
-    function resize() { 
-      var rect = canvas.getBoundingClientRect(); 
-      width = rect.width; 
-      height = rect.height; 
-      canvas.width = Math.round(width * dpr); 
-      canvas.height = Math.round(height * dpr); 
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0); 
-    } 
-
-    window.addEventListener('resize', resize); 
-    resize(); 
-
-    function draw() { 
-      ctx.clearRect(0, 0, width, height); 
-      var now = Date.now(); 
-      var elapsed = now - startTime; 
-      var globalIntroProgress = Math.min(elapsed / introDuration, 1); 
-      var globalEase = 1 - Math.pow(1 - globalIntroProgress, 4); 
-
-      interactionPulse *= 0.9; 
-      interactionFactor += (interactionPulse - interactionFactor) * 0.07; 
-
-      var focalLength = 350; 
-      var cameraZ = 700 + (1 - globalEase) * 600; 
-      var cameraY = -50 - (1 - globalEase) * 200; 
-      var baseSpeed = reduceMotion ? 0.002 : 0.008; 
-      var speedMultiplier = 1 + (1 - globalEase) * 4; 
-      var currentSpeed = (baseSpeed + (interactionFactor * 0.004)) * speedMultiplier; 
-
-      count += currentSpeed; 
-
-      var ampBoost = 1 + (interactionFactor * 0.28); 
-      var introAmpBoost = 1 + (1 - globalEase) * 1.5; 
-      var spinAngle = (1 - globalEase) * -0.4; 
-      var cosA = Math.cos(spinAngle); 
-      var sinA = Math.sin(spinAngle); 
-      var maxDist = Math.sqrt(Math.pow(AMOUNTX / 2, 2) + Math.pow(AMOUNTY / 2, 2)); 
-
-      for (var ix = 0; ix < AMOUNTX; ix++) { 
-        for (var iy = 0; iy < AMOUNTY; iy++) { 
-          var dx = ix - AMOUNTX / 2; 
-          var dy = iy - AMOUNTY / 2; 
-          var rawX = dx * SEPARATION; 
-          var rawZ = dy * SEPARATION; 
-          var x = cosA * rawX - sinA * rawZ; 
-          var z = sinA * rawX + cosA * rawZ; 
-          var distCenter = Math.sqrt(dx * dx + dy * dy); 
-          var distRatio = distCenter / maxDist; 
-          var particleProgress = Math.max(0, Math.min(1, (globalIntroProgress - distRatio * 0.25) / 0.75)); 
-          var particleEase = 1 - Math.pow(1 - particleProgress, 4); 
-
-          var targetY = (Math.sin((ix * 0.25) + count) * 40 + Math.sin((iy * 0.2) + count * 0.8) * 40) * ampBoost * introAmpBoost; 
-          var introYOffset = (1 - particleEase) * 600; 
-          var y = targetY + introYOffset; 
-          var adjustedZ = z + cameraZ; 
-
-          if (adjustedZ > 0) { 
-            var scale = focalLength / adjustedZ; 
-            var px = (x * scale) + (width / 2); 
-            var py = ((y - cameraY) * scale) + (height / 2) - 100; 
-
-            if (px > -50 && px < width + 50 && py > -50 && py < height + 50) { 
-              var normalizedY = (y + 80) / 160; <!DOCTYPE html>
-<html lang="pl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
-<title>Kontakt</title>
-<style>
-  :root {
-    --yellow: #ffffff; /* Zmieniono z żółtego na biały */
-    --bg: #000000;
-    --text-white: #ffffff;
-    --ae-ease: cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  * {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-  }
-
-  html, body {
-    margin: 0;
-    padding: 0;
-    background: var(--bg);
-    color: var(--text-white);
-    font-family: -apple-system, "SF Pro Text", "SF Pro Display", BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-  }
-
-  body.no-scroll {
-    overflow: hidden;
-  }
-
-  /* Subtelna poświata z tyłu */
-  .ambient-glow {
-    position: fixed;
-    top: -5%;
-    right: -10%;
-    width: 350px;
-    height: 350px;
-    background: rgba(255, 255, 255, 0.04); 
-    filter: blur(90px);
-    border-radius: 50%;
-    z-index: 0;
-    pointer-events: none;
-  }
-
-  .page {
-    max-width: 480px;
-    margin: 0 auto;
-    min-height: 100dvh;
-    padding: 0 24px max(80px, env(safe-area-inset-bottom, 40px)) 24px; 
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    z-index: 1;
-  }
-
-  @keyframes aeReveal {
-    0% { 
-      opacity: 0; 
-      transform: translateY(16px);
-    }
-    100% { 
-      opacity: 1; 
-      transform: translateY(0);
-    }
-  }
-
-  /* ---------- Header ---------- */
-  .header {
-    display: flex;
-    align-items: center; 
-    justify-content: space-between; 
-    padding: 24px 0 16px 0; 
-    animation: aeReveal 0.6s var(--ae-ease) forwards;
-    position: relative;
-    z-index: 2001;
-  }
-
-  .logo {
-    display: flex;
-    align-items: center;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-  }
-
-  body.menu-open .logo {
-    opacity: 0;
-    visibility: hidden;
-  }
-
-  .logo img {
-    height: 26px; 
-    width: auto;
-    display: block;
-  }
-
-  /* ---------- Burger Menu ---------- */
-  .burger-menu {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 24px; 
-    height: 16px; 
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    z-index: 2002;
-    position: relative;
-  }
-
-  .burger-menu span {
-    display: block;
-    width: 100%;
-    height: 2px; 
-    background-color: #ffffff; 
-    border-radius: 4px;
-    transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
-  }
-
-  .burger-menu.is-open span:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
-  }
-
-  .burger-menu.is-open span:nth-child(2) {
-    opacity: 0;
-  }
-
-  .burger-menu.is-open span:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
-  }
-
-  /* ---------- Mobile Nav Overlay ---------- */
-  .mobile-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    height: 100dvh;
-    background-color: var(--bg);
-    z-index: 1999;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: 120px 0 0 32px;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transition: opacity 0.4s var(--ae-ease), visibility 0.4s var(--ae-ease), transform 0.4s var(--ae-ease);
-  }
-
-  .mobile-nav.is-open {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-  }
-
-  .mobile-nav::before {
-    content: "";
-    position: absolute;
-    top: -10%;
-    right: -15%;
-    width: 320px;
-    height: 320px;
-    background: rgba(255, 255, 255, 0.04);
-    filter: blur(100px);
-    border-radius: 50%;
-    pointer-events: none;
-  }
-
-  .mobile-nav-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 26px;
-    text-align: left;
-    position: relative;
-    z-index: 1;
-  }
-
-  .mobile-nav-list li {
-    opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-  }
-
-  .mobile-nav.is-open .mobile-nav-list li {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .mobile-nav.is-open .mobile-nav-list li:nth-child(1) { transition-delay: 0.08s; }
-  .mobile-nav.is-open .mobile-nav-list li:nth-child(2) { transition-delay: 0.13s; }
-  .mobile-nav.is-open .mobile-nav-list li:nth-child(3) { transition-delay: 0.18s; }
-  .mobile-nav.is-open .mobile-nav-list li:nth-child(4) { transition-delay: 0.23s; }
-
-  .mobile-nav-list a {
-    display: inline-block;
-    color: var(--text-white);
-    text-decoration: none;
-    font-family: -apple-system, "SF Pro Display", BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-    font-size: 30px;
-    font-weight: 600; /* Jednolite pogrubienie dla wszystkich elementów menu */
-    letter-spacing: -0.5px;
-    transition: opacity 0.2s ease, transform 0.2s ease;
-  }
-
-  .mobile-nav-list a:active {
-    opacity: 0.7;
-    transform: scale(0.97);
-  }
-
-  .mobile-nav-list li.active a {
-    color: var(--text-white); /* Usunięto wyróżnienie kolorem, wszystkie elementy mają ten sam biały kolor i grubość */
-  }
-
-  /* ---------- Hero ---------- */
-  .hero {
-    margin-top: 48px;
-    margin-bottom: 32px;
-    opacity: 0;
-    animation: aeReveal 0.6s var(--ae-ease) 0.1s forwards;
-  }
-
-  .hero h1 {
-    color: var(--yellow);
-    font-size: 38px;
-    line-height: 1.15;
-    font-weight: 600; 
-    margin: 0;
-    letter-spacing: -0.5px;
-  }
-
-  /* ---------- Form ---------- */
-  .contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
-    flex-grow: 1; 
-  }
-
-  .field {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    opacity: 0;
-  }
-
-  .field:nth-child(1) { animation: aeReveal 0.5s var(--ae-ease) 0.15s forwards; }
-  .field:nth-child(2) { animation: aeReveal 0.5s var(--ae-ease) 0.22s forwards; }
-  .field:nth-child(3) { animation: aeReveal 0.5s var(--ae-ease) 0.29s forwards; }
-  .field:nth-child(4) { animation: aeReveal 0.5s var(--ae-ease) 0.36s forwards; }
-
-  .field label {
-    font-size: 17px;
-    font-weight: 500; 
-    color: #D9D9D9;
-    padding-left: 2px;
-  }
-
-  .field input,
-  .field textarea {
-    background: #0F0F0F; 
-    border: 1.5px solid transparent; 
-    border-radius: 8px; 
-    font-size: 16px; 
-    font-weight: 400; 
-    color: var(--text-white);
-    font-family: inherit;
-    outline: none;
-    width: 100%;
-    transition: border-color 0.2s ease;
-    box-shadow: none;
-  }
-
-  .field input {
-    height: 42px; 
-    padding: 0 16px;
-  }
-
-  .field textarea {
-    resize: none;
-    height: 180px; 
-    padding: 12px 16px;
-    line-height: 1.4;
-  }
-
-  .field input::placeholder,
-  .field textarea::placeholder {
-    color: rgba(255, 255, 255, 0.3); 
-    font-weight: 400; 
-  }
-
-  .field input:focus,
-  .field textarea:focus {
-    border-color: transparent;
-  }
-
-  /* ---------- Submit Wrapper ---------- */
-  .submit-wrap {
-    display: none;
-    margin-top: 6px;
-    width: 100%;
-    animation: fadeIn 0.3s ease-out forwards; 
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .submit-btn {
-    width: 100%;
-    height: 42px; 
-    background: #0071E3; /* Zmieniono kolor przycisku wyślij na #0071E3 */
-    color: #ffffff; /* Biały tekst na przycisku dla czytelności */
-    border: none;
-    border-radius: 8px; 
-    font-size: 17px;
-    font-weight: 500; 
-    font-family: inherit;
-    cursor: pointer;
-    transition: opacity 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 15px rgba(0, 113, 227, 0.2); 
-  }
-
-  .submit-btn:hover {
-    opacity: 0.92;
-  }
-
-  .submit-btn:active {
-    opacity: 0.8; 
-  }
-
-  .submit-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
-  .status-msg {
-    text-align: center;
-    font-size: 14px;
-    font-weight: 400; 
-    margin-top: 14px;
-    min-height: 18px;
-    color: var(--yellow);
-    transition: opacity 0.3s ease;
-  }
-
-  @media (min-width: 481px) {
-    .page {
-      padding: 0 32px 40px 32px;
-    }
-  }
-
-  /* ---------- 3D Dot Wave Field ---------- */
-  .dot-field {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: min(65vh, 600px); 
-    z-index: 0;
-    display: block;
-    pointer-events: none;
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 30%, #000 80%);
-            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 30%, #000 80%);
-  }
-</style>
-</head>
-<body>
-
-<div class="ambient-glow"></div>
-<canvas id="dotField" class="dot-field" aria-hidden="true"></canvas>
-
-<div class="page">
-
-  <header class="header">
-    <div class="logo">
-      <img src="https://uploads.onecompiler.io/44h4mcb6e/44uj3jqmd/Groupewqeqw%20267.png" alt="Logo">
+        src="https://uploads.onecompiler.io/44h4mcb6e/44uj3jqmd/Groupewqeqw%20267.png"
+        alt="Logo"
+      >
     </div>
-    
-    <button type="button" class="burger-menu" id="burger-toggle" aria-label="Otwórz menu" aria-expanded="false">
+
+    <button
+      type="button"
+      class="burger-menu"
+      id="burger-toggle"
+      aria-label="Otwórz menu"
+      aria-expanded="false"
+    >
       <span></span>
       <span></span>
       <span></span>
     </button>
   </header>
 
-  <nav class="mobile-nav" id="mobile-nav" aria-hidden="true">
+  <nav
+    class="mobile-nav"
+    id="mobile-nav"
+    aria-hidden="true"
+  >
     <ul class="mobile-nav-list">
-      <li><a href="#start">Start</a></li>
-      <li><a href="#portfolio">Portfolio</a></li>
-      <li><a href="#oferta">Oferta</a></li>
-      <li><a href="#kontakt">Kontakt</a></li>
+      <li>
+        <button type="button" onclick="window.location.href='index.html'">Start</button>
+      </li>
+      <li>
+        <button type="button" onclick="window.location.href='portfolio.html'">Portfolio</button>
+      </li>
+      <li>
+        <button type="button" onclick="window.location.href='oferta.html'">Oferta</button>
+      </li>
+      <li>
+        <button type="button" onclick="closeMenu()">Kontakt</button>
+      </li>
     </ul>
   </nav>
 
   <section class="hero">
-    <h1>Skontaktuj się z<br>nami:</h1>
+    <h1>
+      Skontaktuj się z<br>nami:
+    </h1>
   </section>
 
-  <form class="contact-form" id="contact-form">
+  <div class="selection-summary" id="selection-summary"></div>
+
+  <form
+    class="contact-form"
+    id="contact-form"
+  >
     <div class="field">
-      <label for="name">Twoje imię</label>
-      <input type="text" id="name" name="name" placeholder="Twoje imię" required>
+      <label for="name">
+        Twoje imię
+      </label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        placeholder="Twoje imię"
+        required
+      >
     </div>
 
     <div class="field">
-      <label for="phone">Numer telefonu</label>
-      <input type="tel" id="phone" name="phone" placeholder="Numer telefonu" required>
+      <label for="phone">
+        Numer telefonu
+      </label>
+      <input
+        type="tel"
+        id="phone"
+        name="phone"
+        placeholder="Numer telefonu"
+        required
+      >
     </div>
 
     <div class="field">
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" placeholder="Email" required>
+      <label for="email">
+        Email
+      </label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="Email"
+        required
+      >
     </div>
 
     <div class="field">
-      <label for="message">Wiadomość</label>
-      <textarea id="message" name="message" placeholder="Twoja wiadomość..." required></textarea>
+      <label for="message">
+        Wiadomość
+      </label>
+      <textarea
+        id="message"
+        name="message"
+        placeholder="Twoja wiadomość..."
+        required
+      ></textarea>
     </div>
 
-    <div class="submit-wrap" id="submit-wrap">
-      <button type="submit" class="submit-btn" id="submit-btn">Wyślij</button>
-      <div class="status-msg" id="status-msg"></div>
+    <div
+      class="submit-wrap"
+      id="submit-wrap"
+    >
+      <button
+        type="submit"
+        class="submit-btn"
+        id="submit-btn"
+      >
+        Wyślij
+      </button>
+
+      <div
+        class="status-msg"
+        id="status-msg"
+      ></div>
     </div>
   </form>
-
 </div>
 
 <script>
-  // Menu Burger + Mobile Nav
   const burgerToggle = document.getElementById('burger-toggle');
   const mobileNav = document.getElementById('mobile-nav');
-  const navLinks = mobileNav.querySelectorAll('.mobile-nav-list a');
+  const navButtons = mobileNav.querySelectorAll('.mobile-nav-list button');
 
   function openMenu() {
     burgerToggle.classList.add('is-open');
@@ -1420,7 +814,7 @@ aria-hidden="true"></canvas>
     document.body.classList.remove('menu-open');
   }
 
-  burgerToggle.addEventListener('click', function() {
+  burgerToggle.addEventListener('click', function () {
     if (mobileNav.classList.contains('is-open')) {
       closeMenu();
     } else {
@@ -1428,26 +822,39 @@ aria-hidden="true"></canvas>
     }
   });
 
-  navLinks.forEach(function(link) {
-    link.addEventListener('click', closeMenu);
+  navButtons.forEach(function (btn) {
+    btn.addEventListener('click', closeMenu);
   });
 
-  // Obsługa formularza
+  // ---------- Podsumowanie wybranego pakietu (z oferta.html) ----------
+  (function () {
+    const params = new URLSearchParams(window.location.search);
+    const usluga = params.get('usluga');
+    const pakiet = params.get('pakiet');
+    const cena = params.get('cena');
+    const summaryEl = document.getElementById('selection-summary');
+
+    if (usluga && pakiet) {
+      summaryEl.style.display = 'block';
+      summaryEl.innerHTML =
+        '<b>Twój wybór:</b><br>' + usluga + ' — ' + pakiet + (cena ? ' (' + cena + ')' : '');
+    }
+  })();
+
   const form = document.getElementById('contact-form');
   const submitBtn = document.getElementById('submit-btn');
   const statusMsg = document.getElementById('status-msg');
   const submitWrap = document.getElementById('submit-wrap');
-  
   const inputs = form.querySelectorAll('input, textarea');
-  
+
   function checkInput() {
     let hasText = false;
-    inputs.forEach(input => {
+    inputs.forEach(function (input) {
       if (input.value.trim().length > 0) {
         hasText = true;
       }
     });
-    
+
     if (hasText) {
       submitWrap.style.display = 'block';
     } else {
@@ -1455,27 +862,29 @@ aria-hidden="true"></canvas>
     }
   }
 
-  inputs.forEach(input => {
+  checkInput();
+
+  inputs.forEach(function (input) {
     input.addEventListener('input', checkInput);
   });
 
-  form.addEventListener('submit', function(e) {
+  form.addEventListener('submit', function (e) {
     e.preventDefault();
     submitBtn.disabled = true;
     submitBtn.textContent = 'Wysyłanie...';
 
-    setTimeout(function() {
+    setTimeout(function () {
       statusMsg.textContent = 'Wiadomość została wysłana!';
       submitBtn.disabled = false;
       submitBtn.textContent = 'Wyślij';
       form.reset();
-      
-      setTimeout(() => {
-        statusMsg.style.opacity = '0'; 
-        setTimeout(() => {
+
+      setTimeout(function () {
+        statusMsg.style.opacity = '0';
+        setTimeout(function () {
           statusMsg.textContent = '';
           statusMsg.style.opacity = '1';
-          checkInput(); 
+          checkInput();
         }, 300);
       }, 3000);
     }, 700);
@@ -1483,40 +892,39 @@ aria-hidden="true"></canvas>
 </script>
 
 <script>
-  // ---------- 3D Dot Wave Field z Animacją Startową ----------
   (function () {
     var canvas = document.getElementById('dotField');
-    if (!canvas || !canvas.getContext) return;
+    if (!canvas || !canvas.getContext) {
+      return;
+    }
+
     var ctx = canvas.getContext('2d');
-
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    var width = 0, height = 0;
-
-    var AMOUNTX = 65; 
-    var AMOUNTY = 50; 
-    var SEPARATION = 35; 
-    var RADIUS = 1.15; 
-
+    var width = 0;
+    var height = 0;
+    var AMOUNTX = 65;
+    var AMOUNTY = 50;
+    var SEPARATION = 35;
+    var RADIUS = 1.15;
     var count = 0;
-    var interactionPulse = 0; 
-    var interactionFactor = 0; 
+    var interactionPulse = 0;
+    var interactionFactor = 0;
     var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Zmienne do początkowej animacji wejścia
     var startTime = Date.now();
-    var introDuration = 3500; // Czas trwania pięknego wejścia (3.5 sekundy)
+    var introDuration = 3500;
 
-    window.triggerWaveInteraction = function() {
+    window.triggerWaveInteraction = function () {
       interactionPulse = Math.min(interactionPulse + 0.6, 1.4);
     };
 
-    document.addEventListener('input', function(e) {
+    document.addEventListener('input', function (e) {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
         window.triggerWaveInteraction();
       }
     });
 
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', function (e) {
       if (e.target.closest('button') || e.target.closest('.submit-btn') || e.target.closest('.burger-menu')) {
         window.triggerWaveInteraction();
       }
@@ -1530,65 +938,52 @@ aria-hidden="true"></canvas>
       canvas.height = Math.round(height * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
+
     window.addEventListener('resize', resize);
     resize();
 
     function draw() {
       ctx.clearRect(0, 0, width, height);
-
-      // --- LOGIKA ANIMACJI STARTOWEJ ---
       var now = Date.now();
       var elapsed = now - startTime;
       var globalIntroProgress = Math.min(elapsed / introDuration, 1);
-      
       var globalEase = 1 - Math.pow(1 - globalIntroProgress, 4);
 
       interactionPulse *= 0.9;
       interactionFactor += (interactionPulse - interactionFactor) * 0.07;
 
-      var focalLength = 350; 
-      
-      var cameraZ = 700 + (1 - globalEase) * 600;     
-      var cameraY = -50 - (1 - globalEase) * 200; 
-      
-      var baseSpeed = reduceMotion ? 0.002 : 0.008; 
-      var speedMultiplier = 1 + (1 - globalEase) * 4; 
+      var focalLength = 350;
+      var cameraZ = 700 + (1 - globalEase) * 600;
+      var cameraY = -50 - (1 - globalEase) * 200;
+      var baseSpeed = reduceMotion ? 0.002 : 0.008;
+      var speedMultiplier = 1 + (1 - globalEase) * 4;
       var currentSpeed = (baseSpeed + (interactionFactor * 0.004)) * speedMultiplier;
+
       count += currentSpeed;
 
       var ampBoost = 1 + (interactionFactor * 0.28);
-      var introAmpBoost = 1 + (1 - globalEase) * 1.5; 
-
+      var introAmpBoost = 1 + (1 - globalEase) * 1.5;
       var spinAngle = (1 - globalEase) * -0.4;
       var cosA = Math.cos(spinAngle);
       var sinA = Math.sin(spinAngle);
-
-      var maxDist = Math.sqrt(Math.pow(AMOUNTX/2, 2) + Math.pow(AMOUNTY/2, 2));
+      var maxDist = Math.sqrt(Math.pow(AMOUNTX / 2, 2) + Math.pow(AMOUNTY / 2, 2));
 
       for (var ix = 0; ix < AMOUNTX; ix++) {
         for (var iy = 0; iy < AMOUNTY; iy++) {
-          
           var dx = ix - AMOUNTX / 2;
           var dy = iy - AMOUNTY / 2;
-          
           var rawX = dx * SEPARATION;
           var rawZ = dy * SEPARATION;
-
           var x = cosA * rawX - sinA * rawZ;
           var z = sinA * rawX + cosA * rawZ;
-
-          var distCenter = Math.sqrt(dx*dx + dy*dy);
-          var distRatio = distCenter / maxDist; 
-          
+          var distCenter = Math.sqrt(dx * dx + dy * dy);
+          var distRatio = distCenter / maxDist;
           var particleProgress = Math.max(0, Math.min(1, (globalIntroProgress - distRatio * 0.25) / 0.75));
           var particleEase = 1 - Math.pow(1 - particleProgress, 4);
 
-          var targetY = (Math.sin((ix * 0.25) + count) * 40 +
-                         Math.sin((iy * 0.2) + count * 0.8) * 40) * ampBoost * introAmpBoost;
-
-          var introYOffset = (1 - particleEase) * 600; 
+          var targetY = (Math.sin((ix * 0.25) + count) * 40 + Math.sin((iy * 0.2) + count * 0.8) * 40) * ampBoost * introAmpBoost;
+          var introYOffset = (1 - particleEase) * 600;
           var y = targetY + introYOffset;
-
           var adjustedZ = z + cameraZ;
 
           if (adjustedZ > 0) {
@@ -1597,12 +992,10 @@ aria-hidden="true"></canvas>
             var py = ((y - cameraY) * scale) + (height / 2) - 100;
 
             if (px > -50 && px < width + 50 && py > -50 && py < height + 50) {
-              
-              var normalizedY = (y + 80) / 160; 
-              var shade = Math.round(255 - (normalizedY * 220)); 
-              
+              var normalizedY = (y + 80) / 160;
+              var shade = Math.round(255 - (normalizedY * 220));
               var baseAlpha = Math.max(0.1, 1.2 - (adjustedZ / 1000));
-              var alpha = baseAlpha * particleEase; 
+              var alpha = baseAlpha * particleEase;
 
               ctx.beginPath();
               ctx.fillStyle = 'rgba(' + shade + ', ' + shade + ', ' + shade + ', ' + alpha.toFixed(2) + ')';
@@ -1615,29 +1008,10 @@ aria-hidden="true"></canvas>
 
       requestAnimationFrame(draw);
     }
-    
+
     requestAnimationFrame(draw);
   })();
 </script>
 
-</body> 
-</html>
-              var shade = Math.round(255 - (normalizedY * 220)); 
-              var baseAlpha = Math.max(0.1, 1.2 - (adjustedZ / 1000)); 
-              var alpha = baseAlpha * particleEase; 
-
-              ctx.beginPath(); 
-              ctx.fillStyle = 'rgba(' + shade + ', ' + shade + ', ' + shade + ', ' + alpha.toFixed(2) + ')'; 
-              ctx.arc(px, py, RADIUS, 0, Math.PI * 2); 
-              ctx.fill(); 
-            } 
-          } 
-        } 
-      } 
-      requestAnimationFrame(draw); 
-    } 
-    requestAnimationFrame(draw); 
-  })(); 
-</script> 
-</body> 
+</body>
 </html>
