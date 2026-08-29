@@ -121,25 +121,25 @@
     display: block;
     width: 100%;
     height: 2px;
-    /* Kept black instead of white so it doesn't disappear against the white background */
-    background-color: #000000; 
+    /* Kolor zmieniony na czarny, aby był widoczny na białym tle */
+    background-color: #000000;
     border-radius: 4px;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    /* Brak opóźnień (lagów), płynne przejście transformacji */
+    transition:
+      transform 0.3s ease,
+      opacity 0.3s ease,
+      background-color 0.3s ease;
   }
 
-  /* ANIMATION STATES WHEN 'is-open' CLASS IS ADDED */
-  
-  /* Top line moves down 7px and rotates 45 degrees */
+  /* Animacja otwierania (krzyżyk) */
   .burger-menu.is-open span:nth-child(1) {
     transform: translateY(7px) rotate(45deg);
   }
 
-  /* Middle line disappears */
   .burger-menu.is-open span:nth-child(2) {
     opacity: 0;
   }
 
-  /* Bottom line moves up 7px and rotates -45 degrees */
   .burger-menu.is-open span:nth-child(3) {
     transform: translateY(-7px) rotate(-45deg);
   }
