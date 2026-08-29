@@ -67,12 +67,8 @@
   /* ---------- General Animations ---------- */
 
   @keyframes aeReveal {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
+    0% { opacity: 0; }
+    100% { opacity: 1; }
   }
 
   /* ---------- Header ---------- */
@@ -125,19 +121,25 @@
     display: block;
     width: 100%;
     height: 2px;
-    background-color: #000000;
+    /* Kept black instead of white so it doesn't disappear against the white background */
+    background-color: #000000; 
     border-radius: 4px;
-    transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
+    transition: transform 0.3s ease, opacity 0.3s ease;
   }
 
+  /* ANIMATION STATES WHEN 'is-open' CLASS IS ADDED */
+  
+  /* Top line moves down 7px and rotates 45 degrees */
   .burger-menu.is-open span:nth-child(1) {
     transform: translateY(7px) rotate(45deg);
   }
 
+  /* Middle line disappears */
   .burger-menu.is-open span:nth-child(2) {
     opacity: 0;
   }
 
+  /* Bottom line moves up 7px and rotates -45 degrees */
   .burger-menu.is-open span:nth-child(3) {
     transform: translateY(-7px) rotate(-45deg);
   }
@@ -188,21 +190,10 @@
     opacity: 1;
   }
 
-  .mobile-nav.is-open .mobile-nav-list li:nth-child(1) {
-    transition-delay: 0.08s;
-  }
-
-  .mobile-nav.is-open .mobile-nav-list li:nth-child(2) {
-    transition-delay: 0.13s;
-  }
-
-  .mobile-nav.is-open .mobile-nav-list li:nth-child(3) {
-    transition-delay: 0.18s;
-  }
-
-  .mobile-nav.is-open .mobile-nav-list li:nth-child(4) {
-    transition-delay: 0.23s;
-  }
+  .mobile-nav.is-open .mobile-nav-list li:nth-child(1) { transition-delay: 0.08s; }
+  .mobile-nav.is-open .mobile-nav-list li:nth-child(2) { transition-delay: 0.13s; }
+  .mobile-nav.is-open .mobile-nav-list li:nth-child(3) { transition-delay: 0.18s; }
+  .mobile-nav.is-open .mobile-nav-list li:nth-child(4) { transition-delay: 0.23s; }
 
   .mobile-nav-list button,
   .mobile-nav-list a {
@@ -213,14 +204,11 @@
     border: none;
     padding: 0;
     cursor: pointer;
-    font-family: -apple-system, "SF Pro Display",
-                 BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    font-family: -apple-system, "SF Pro Display", BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
     font-size: 30px;
     font-weight: 600;
     letter-spacing: -0.5px;
-    transition:
-      opacity 0.2s ease,
-      transform 0.2s ease;
+    transition: opacity 0.2s ease, transform 0.2s ease;
   }
 
   .mobile-nav-list button:active,
@@ -338,11 +326,7 @@
     color: #000000;
     cursor: pointer;
     opacity: 0;
-    transition:
-      opacity 0.2s linear,
-      border-color 0.2s ease,
-      background-color 0.2s ease,
-      transform 0.15s ease;
+    transition: opacity 0.2s linear, border-color 0.2s ease, background-color 0.2s ease, transform 0.15s ease;
   }
 
   .view-in .offer-box {
@@ -381,11 +365,7 @@
     font-weight: 400;
     font-family: inherit;
     cursor: pointer;
-    transition:
-      background-color 0.3s ease,
-      color 0.3s ease,
-      opacity 0.2s ease,
-      transform 0.2s ease;
+    transition: background-color 0.3s ease, color 0.3s ease, opacity 0.2s ease, transform 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -498,6 +478,7 @@
       >
     </div>
 
+    <!-- Burger Menu Button -->
     <button
       type="button"
       class="burger-menu"
@@ -737,6 +718,7 @@
   const navLinks = mobileNav.querySelectorAll('.mobile-nav-list a');
 
   function openMenu() {
+    // This part adds the 'is-open' class that triggers the CSS animation
     burgerToggle.classList.add('is-open');
     mobileNav.classList.add('is-open');
     burgerToggle.setAttribute('aria-expanded', 'true');
@@ -745,6 +727,7 @@
   }
 
   function closeMenu() {
+    // This part removes the 'is-open' class
     burgerToggle.classList.remove('is-open');
     mobileNav.classList.remove('is-open');
     burgerToggle.setAttribute('aria-expanded', 'false');
