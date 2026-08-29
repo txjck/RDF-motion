@@ -69,7 +69,7 @@
   @keyframes aeReveal {
     0% {
       opacity: 0;
-      transform: translateY(16px);
+      transform: translateY(6px); /* Zmieniono z 16px na 6px dla większej subtelności */
     }
     100% {
       opacity: 1;
@@ -244,7 +244,7 @@
 
   .app-content {
     margin-top: auto;
-    margin-bottom: 80px;
+    margin-bottom: 24px; /* Zmniejszony margines dolny z 80px na 24px */
     display: grid;
     width: 100%;
   }
@@ -375,16 +375,14 @@
     background: rgba(0, 113, 227, 0.03);
   }
 
-  /* ---------- Submit Button (Fixed) ---------- */
+  /* ---------- Submit Button ---------- */
 
   .submit-wrap {
-    position: fixed;
-    bottom: max(24px, env(safe-area-inset-bottom, 24px));
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 48px);
-    max-width: 432px;
-    z-index: 1000;
+    /* Usunięto position: fixed, teraz jest osadzone prosto pod kontentem */
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    z-index: 10;
     opacity: 0;
     animation: aeReveal 0.6s var(--ae-ease) 0.45s forwards;
   }
@@ -524,7 +522,6 @@
 
     .submit-wrap {
       max-width: 400px;
-      bottom: 32px;
     }
   }
 </style>
@@ -762,16 +759,15 @@
   </div>
 
   <!-- ---------- PRZYCISK NA DOLE ---------- -->
+  <!-- Przycisk jest teraz fizycznie pod zawartością, zamiast latać jako overlay -->
 
   <div class="submit-wrap">
-
     <button
       class="submit-btn disabled-btn"
       id="action-btn"
     >
       zapytaj o termin
     </button>
-
   </div>
 
 </div>
@@ -1298,4 +1294,3 @@
 
 </body>
 </html>
-
