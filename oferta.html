@@ -69,7 +69,7 @@
   @keyframes aeReveal {
     0% {
       opacity: 0;
-      transform: translateY(6px); /* Zmieniono z 16px na 6px dla większej subtelności */
+      transform: translateY(6px);
     }
     100% {
       opacity: 1;
@@ -243,7 +243,7 @@
 
   .app-content {
     margin-top: auto;
-    margin-bottom: 24px; /* Zmniejszony margines dolny z 80px na 24px */
+    margin-bottom: 24px;
     display: grid;
     width: 100%;
   }
@@ -262,6 +262,9 @@
   }
 
   /* ---------- Apple Motion View Elements ---------- */
+  /* Transition-based (not keyframe) so re-entering a view is always
+     smooth, not just the first time. Triggered via the .view-in class,
+     added by JS one frame after the view becomes visible. */
 
   .page-title {
     font-size: 42px;
@@ -270,10 +273,16 @@
     margin: 0;
     line-height: 1.1;
     opacity: 0;
+    transform: translateY(10px);
+    transition:
+      opacity 0.5s var(--ae-ease),
+      transform 0.5s var(--ae-ease);
   }
 
-  .active-view .page-title {
-    animation: aeReveal 0.6s var(--ae-ease) 0.1s forwards;
+  .view-in .page-title {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.06s;
   }
 
   .page-subtitle {
@@ -283,10 +292,16 @@
     margin-top: 6px;
     margin-bottom: 24px;
     opacity: 0;
+    transform: translateY(10px);
+    transition:
+      opacity 0.5s var(--ae-ease),
+      transform 0.5s var(--ae-ease);
   }
 
-  .active-view .page-subtitle {
-    animation: aeReveal 0.6s var(--ae-ease) 0.18s forwards;
+  .view-in .page-subtitle {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.12s;
   }
 
   .text-blue {
@@ -307,11 +322,12 @@
     align-items: center;
     gap: 4px;
     opacity: 0;
-    transition: opacity 0.2s ease;
+    transition: opacity 0.4s var(--ae-ease);
   }
 
-  .active-view .back-link {
-    animation: aeReveal 0.5s var(--ae-ease) 0.05s forwards;
+  .view-in .back-link {
+    opacity: 1;
+    transition-delay: 0.02s;
   }
 
   .back-link:active {
@@ -346,26 +362,35 @@
     color: #000000;
     cursor: pointer;
     opacity: 0;
+    transform: translateY(10px);
     transition:
+      opacity 0.5s var(--ae-ease),
+      transform 0.5s var(--ae-ease),
       border-color 0.2s ease,
-      background-color 0.2s ease,
-      transform 0.2s ease;
+      background-color 0.2s ease;
   }
 
-  .active-view .offer-box:nth-child(1) {
-    animation: aeReveal 0.5s var(--ae-ease) 0.25s forwards;
+  .view-in .offer-box:nth-child(1) {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.16s;
   }
 
-  .active-view .offer-box:nth-child(2) {
-    animation: aeReveal 0.5s var(--ae-ease) 0.32s forwards;
+  .view-in .offer-box:nth-child(2) {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.22s;
   }
 
-  .active-view .offer-box:nth-child(3) {
-    animation: aeReveal 0.5s var(--ae-ease) 0.39s forwards;
+  .view-in .offer-box:nth-child(3) {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.28s;
   }
 
   .offer-box:active {
     transform: scale(0.98);
+    transition-duration: 0.15s;
   }
 
   .offer-box.selected {
@@ -377,7 +402,6 @@
   /* ---------- Submit Button ---------- */
 
   .submit-wrap {
-    /* Usunięto position: fixed, teraz jest osadzone prosto pod kontentem */
     position: relative;
     width: 100%;
     margin: 0 auto;
@@ -417,32 +441,6 @@
   .submit-btn:not(.disabled-btn):active {
     opacity: 0.8;
     transform: scale(0.98);
-  }
-
-  /* ---------- Canvas Wave ---------- */
-
-  .dot-field {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: min(65vh, 600px);
-    z-index: 0;
-    display: block;
-    pointer-events: none;
-    -webkit-mask-image: linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgba(0,0,0,0.6) 30%,
-      #000 80%
-    );
-    mask-image: linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgba(0,0,0,0.6) 30%,
-      #000 80%
-    );
   }
 
   /* ==========================================================
@@ -530,8 +528,6 @@
 <body>
 
 <div class="ambient-glow"></div>
-
-<canvas id="dotField" class="dot-field" aria-hidden="true"></canvas>
 
 <div class="page">
 
@@ -758,7 +754,6 @@
   </div>
 
   <!-- ---------- PRZYCISK NA DOLE ---------- -->
-  <!-- Przycisk jest teraz fizycznie pod zawartością, zamiast latać jako overlay -->
 
   <div class="submit-wrap">
     <button
@@ -784,45 +779,29 @@
   const navLinks = mobileNav.querySelectorAll('.mobile-nav-list a');
 
   function openMenu() {
-
     burgerToggle.classList.add('is-open');
-
     mobileNav.classList.add('is-open');
-
     burgerToggle.setAttribute('aria-expanded', 'true');
-
     mobileNav.setAttribute('aria-hidden', 'false');
-
     document.body.classList.add('no-scroll', 'menu-open');
-
   }
 
   function closeMenu() {
-
     burgerToggle.classList.remove('is-open');
-
     mobileNav.classList.remove('is-open');
-
     burgerToggle.setAttribute('aria-expanded', 'false');
-
     mobileNav.setAttribute('aria-hidden', 'true');
-
     document.body.classList.remove('no-scroll', 'menu-open');
-
   }
 
   burgerToggle.addEventListener('click', () => {
-
     mobileNav.classList.contains('is-open')
       ? closeMenu()
       : openMenu();
-
   });
 
   navLinks.forEach(link => {
-
     link.addEventListener('click', closeMenu);
-
   });
 
 
@@ -830,464 +809,67 @@
 
   const actionBtn = document.getElementById('action-btn');
 
-  document.querySelectorAll('#view-oferta .offer-box').forEach(box => {
+  // Plays the staggered entrance smoothly every time, not just on the
+  // first run: we force a reflow before adding the class that starts
+  // the transition, so the browser always has a committed "from" state.
+  function activateView(view) {
+    view.classList.remove('view-in');
+    void view.offsetWidth;
 
-    box.addEventListener('click', () => {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        view.classList.add('view-in');
+      });
+    });
+  }
 
-      const targetViewId = box.getAttribute('data-target');
-
-      if (targetViewId) {
-
-        document
-          .querySelectorAll('.view')
-          .forEach(v => v.classList.remove('active-view'));
-
-        document
-          .getElementById(targetViewId)
-          .classList.add('active-view');
-
-        actionBtn.classList.add('disabled-btn');
-
-      }
-
+  function switchView(targetId) {
+    document.querySelectorAll('.view').forEach(v => {
+      v.classList.remove('active-view', 'view-in');
     });
 
+    const target = document.getElementById(targetId);
+    target.classList.add('active-view');
+    activateView(target);
+  }
+
+  document.querySelectorAll('#view-oferta .offer-box').forEach(box => {
+    box.addEventListener('click', () => {
+      const targetViewId = box.getAttribute('data-target');
+      if (targetViewId) {
+        switchView(targetViewId);
+        actionBtn.classList.add('disabled-btn');
+      }
+    });
   });
 
-
   ['view-zdjecia', 'view-film', 'view-film-zdjecia'].forEach(viewId => {
-
     const viewEl = document.getElementById(viewId);
-
     if (!viewEl) return;
 
     const boxes = viewEl.querySelectorAll('.offer-box');
 
     boxes.forEach(box => {
-
       box.addEventListener('click', () => {
-
         boxes.forEach(b => b.classList.remove('selected'));
-
         box.classList.add('selected');
-
         actionBtn.classList.remove('disabled-btn');
-
       });
-
     });
-
   });
-
 
   function goBack() {
-
-    document
-      .querySelectorAll('.view')
-      .forEach(v => v.classList.remove('active-view'));
-
-    document
-      .getElementById('view-oferta')
-      .classList.add('active-view');
-
-    document
-      .querySelectorAll('.offer-box')
-      .forEach(b => b.classList.remove('selected'));
-
+    switchView('view-oferta');
+    document.querySelectorAll('.offer-box').forEach(b => b.classList.remove('selected'));
     actionBtn.classList.add('disabled-btn');
-
   }
 
-
   actionBtn.addEventListener('click', () => {
-
     if (actionBtn.classList.contains('disabled-btn')) return;
-
   });
 
-</script>
-
-
-<!-- ==========================================================
-     VECTOR DOTS ANIMATION
-     ========================================================== -->
-
-<script>
-
-  (function () {
-
-    var canvas = document.getElementById('dotField');
-
-    if (!canvas || !canvas.getContext) return;
-
-    var ctx = canvas.getContext('2d');
-
-    var dpr = Math.min(
-      window.devicePixelRatio || 1,
-      2
-    );
-
-    var width = 0;
-    var height = 0;
-
-    var AMOUNTX = 65;
-    var AMOUNTY = 50;
-    var SEPARATION = 35;
-    var RADIUS = 1.15;
-
-    var count = 0;
-    var interactionPulse = 0;
-    var interactionFactor = 0;
-
-    var reduceMotion =
-      window.matchMedia &&
-      window.matchMedia(
-        '(prefers-reduced-motion: reduce)'
-      ).matches;
-
-    var startTime = Date.now();
-    var introDuration = 3500;
-
-
-    window.triggerWaveInteraction = function () {
-
-      interactionPulse = Math.min(
-        interactionPulse + 0.6,
-        1.4
-      );
-
-    };
-
-
-    document.addEventListener('click', function (e) {
-
-      if (
-        e.target.closest('.offer-box') ||
-        e.target.closest('.submit-btn') ||
-        e.target.closest('.burger-menu') ||
-        e.target.closest('.back-link')
-      ) {
-
-        window.triggerWaveInteraction();
-
-      }
-
-    });
-
-
-    function resize() {
-
-      var rect = canvas.getBoundingClientRect();
-
-      width = rect.width;
-      height = rect.height;
-
-      canvas.width = Math.round(width * dpr);
-      canvas.height = Math.round(height * dpr);
-
-      ctx.setTransform(
-        dpr,
-        0,
-        0,
-        dpr,
-        0,
-        0
-      );
-
-    }
-
-
-    window.addEventListener(
-      'resize',
-      resize
-    );
-
-    resize();
-
-
-    function draw() {
-
-      ctx.clearRect(
-        0,
-        0,
-        width,
-        height
-      );
-
-      var now = Date.now();
-
-      var elapsed = now - startTime;
-
-      var globalIntroProgress =
-        Math.min(
-          elapsed / introDuration,
-          1
-        );
-
-      var globalEase =
-        1 - Math.pow(
-          1 - globalIntroProgress,
-          4
-        );
-
-
-      interactionPulse *= 0.9;
-
-      interactionFactor +=
-        (interactionPulse - interactionFactor) *
-        0.07;
-
-
-      var focalLength = 350;
-
-      var cameraZ =
-        700 +
-        (1 - globalEase) * 600;
-
-      var cameraY =
-        -50 -
-        (1 - globalEase) * 200;
-
-
-      var baseSpeed =
-        reduceMotion
-          ? 0.002
-          : 0.008;
-
-
-      var speedMultiplier =
-        1 +
-        (1 - globalEase) * 4;
-
-
-      var currentSpeed =
-        (
-          baseSpeed +
-          (interactionFactor * 0.004)
-        ) *
-        speedMultiplier;
-
-
-      count += currentSpeed;
-
-
-      var ampBoost =
-        1 +
-        (interactionFactor * 0.28);
-
-
-      var introAmpBoost =
-        1 +
-        (1 - globalEase) * 1.5;
-
-
-      var spinAngle =
-        (1 - globalEase) * -0.4;
-
-
-      var cosA = Math.cos(spinAngle);
-      var sinA = Math.sin(spinAngle);
-
-
-      var maxDist =
-        Math.sqrt(
-          Math.pow(AMOUNTX / 2, 2) +
-          Math.pow(AMOUNTY / 2, 2)
-        );
-
-
-      for (
-        var ix = 0;
-        ix < AMOUNTX;
-        ix++
-      ) {
-
-        for (
-          var iy = 0;
-          iy < AMOUNTY;
-          iy++
-        ) {
-
-          var dx =
-            ix -
-            AMOUNTX / 2;
-
-          var dy =
-            iy -
-            AMOUNTY / 2;
-
-
-          var rawX =
-            dx * SEPARATION;
-
-          var rawZ =
-            dy * SEPARATION;
-
-
-          var x =
-            cosA * rawX -
-            sinA * rawZ;
-
-          var z =
-            sinA * rawX +
-            cosA * rawZ;
-
-
-          var distCenter =
-            Math.sqrt(
-              dx * dx +
-              dy * dy
-            );
-
-
-          var distRatio =
-            distCenter / maxDist;
-
-
-          var particleProgress =
-            Math.max(
-              0,
-              Math.min(
-                1,
-                (
-                  globalIntroProgress -
-                  distRatio * 0.25
-                ) / 0.75
-              )
-            );
-
-
-          var particleEase =
-            1 -
-            Math.pow(
-              1 - particleProgress,
-              4
-            );
-
-
-          var targetY =
-            (
-              Math.sin(
-                (ix * 0.25) + count
-              ) * 40 +
-
-              Math.sin(
-                (iy * 0.2) +
-                count * 0.8
-              ) * 40
-            ) *
-            ampBoost *
-            introAmpBoost;
-
-
-          var introYOffset =
-            (1 - particleEase) * 600;
-
-
-          var y =
-            targetY +
-            introYOffset;
-
-
-          var adjustedZ =
-            z +
-            cameraZ;
-
-
-          if (adjustedZ > 0) {
-
-            var scale =
-              focalLength /
-              adjustedZ;
-
-
-            var px =
-              (x * scale) +
-              (width / 2);
-
-
-            var py =
-              (
-                (y - cameraY) *
-                scale
-              ) +
-              (height / 2) -
-              100;
-
-
-            if (
-              px > -50 &&
-              px < width + 50 &&
-              py > -50 &&
-              py < height + 50
-            ) {
-
-              var normalizedY =
-                (y + 80) / 160;
-
-
-              var shade =
-                Math.round(
-                  normalizedY * 80
-                );
-
-
-              var baseAlpha =
-                Math.max(
-                  0.1,
-                  1.2 -
-                  (adjustedZ / 1000)
-                );
-
-
-              var alpha =
-                baseAlpha *
-                particleEase;
-
-
-              ctx.beginPath();
-
-
-              ctx.fillStyle =
-                'rgba(' +
-                shade +
-                ', ' +
-                shade +
-                ', ' +
-                shade +
-                ', ' +
-                alpha.toFixed(2) +
-                ')';
-
-
-              ctx.arc(
-                px,
-                py,
-                RADIUS,
-                0,
-                Math.PI * 2
-              );
-
-
-              ctx.fill();
-
-            }
-
-          }
-
-        }
-
-      }
-
-
-      requestAnimationFrame(draw);
-
-    }
-
-
-    requestAnimationFrame(draw);
-
-  })();
+  // Play the entrance animation for the initial view on load too.
+  activateView(document.getElementById('view-oferta'));
 
 </script>
 
