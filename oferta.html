@@ -319,7 +319,7 @@
     stroke-width: 2.2;
   }
 
-  /* ---------- Options Box Cascade ---------- */
+  /* ---------- Options Box Simultaneous Fade ---------- */
 
   .options-list {
     display: flex;
@@ -342,25 +342,14 @@
     cursor: pointer;
     opacity: 0;
     transition:
-      opacity 0.4s var(--ae-ease),
+      opacity 0.4s var(--ae-ease) 0.12s,
       border-color 0.2s ease,
       background-color 0.2s ease,
       transform 0.15s ease;
   }
 
-  .view-in .offer-box:nth-child(1) {
+  .view-in .offer-box {
     opacity: 1;
-    transition-delay: 0.12s;
-  }
-
-  .view-in .offer-box:nth-child(2) {
-    opacity: 1;
-    transition-delay: 0.16s;
-  }
-
-  .view-in .offer-box:nth-child(3) {
-    opacity: 1;
-    transition-delay: 0.20s;
   }
 
   .offer-box:active {
