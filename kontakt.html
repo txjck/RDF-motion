@@ -10,6 +10,8 @@
     --yellow: #ffffff;
     --bg: #000000;
     --text-white: #ffffff;
+    --gray-bg: #E5E5EA;
+    --gray-text: #8E8E93;
     --ae-ease: cubic-bezier(0.16, 1, 0.3, 1);
   }
 
@@ -166,18 +168,17 @@
     padding: 120px 0 0 32px;
 
     opacity: 0;
-    visibility: hidden;
+    pointer-events: none;
     transform: translateY(-10px);
 
     transition:
       opacity 0.4s var(--ae-ease),
-      visibility 0.4s var(--ae-ease),
       transform 0.4s var(--ae-ease);
   }
 
   .mobile-nav.is-open {
     opacity: 1;
-    visibility: visible;
+    pointer-events: auto;
     transform: translateY(0);
   }
 
@@ -251,7 +252,7 @@
                  BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
 
     font-size: 30px;
-    font-weight: 700;
+    font-weight: 600;
     letter-spacing: -0.5px;
 
     transition:
@@ -394,23 +395,12 @@
   /* ---------- Submit Button ---------- */
 
   .submit-wrap {
-    display: none;
+    display: block;
     margin-top: 6px;
     width: 100%;
 
-    animation: fadeIn 0.3s ease-out forwards;
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(8px);
-    }
-
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    opacity: 0;
+    animation: aeReveal 0.5s var(--ae-ease) 0.4s forwards;
   }
 
   .submit-btn {
@@ -430,7 +420,10 @@
 
     cursor: pointer;
 
-    transition: opacity 0.2s ease;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease,
+      opacity 0.2s ease;
 
     display: flex;
     align-items: center;
@@ -439,17 +432,19 @@
     box-shadow: 0 4px 15px rgba(0, 113, 227, 0.2);
   }
 
-  .submit-btn:hover {
+  .submit-btn.disabled-btn {
+    background: var(--gray-bg);
+    color: var(--gray-text);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .submit-btn:not(.disabled-btn):hover {
     opacity: 0.92;
   }
 
-  .submit-btn:active {
+  .submit-btn:not(.disabled-btn):active {
     opacity: 0.8;
-  }
-
-  .submit-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
   }
 
   .status-msg {
@@ -541,7 +536,7 @@
       align-items: center;
       padding: 0;
       opacity: 1;
-      visibility: visible;
+      pointer-events: auto;
       transform: none;
       transition: none;
     }
@@ -642,7 +637,6 @@
     .submit-wrap {
       grid-column: 1 / -1;
       grid-row: 4;
-      display: none;
       width: 414px;
       margin: 23px auto 0 auto;
     }
@@ -777,7 +771,7 @@ aria-hidden="true"></canvas>
     >
       <button
         type="submit"
-        class="submit-btn"
+        class="submit-btn disabled-btn"
         id="submit-btn"
       >
         Wyślij
@@ -848,18 +842,14 @@ aria-hidden="true"></canvas>
   const inputs = form.querySelectorAll('input, textarea');
 
   function checkInput() {
-    let hasText = false;
+    let allFilled = true;
     inputs.forEach(function (input) {
-      if (input.value.trim().length > 0) {
-        hasText = true;
+      if (input.value.trim().length === 0) {
+        allFilled = false;
       }
     });
 
-    if (hasText) {
-      submitWrap.style.display = 'block';
-    } else {
-      submitWrap.style.display = 'none';
-    }
+    submitBtn.classList.toggle('disabled-btn', !allFilled);
   }
 
   checkInput();
@@ -870,6 +860,9 @@ aria-hidden="true"></canvas>
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
+
+    if (submitBtn.classList.contains('disabled-btn')) return;
+
     submitBtn.disabled = true;
     submitBtn.textContent = 'Wysyłanie...';
 
@@ -878,13 +871,13 @@ aria-hidden="true"></canvas>
       submitBtn.disabled = false;
       submitBtn.textContent = 'Wyślij';
       form.reset();
+      checkInput();
 
       setTimeout(function () {
         statusMsg.style.opacity = '0';
         setTimeout(function () {
           statusMsg.textContent = '';
           statusMsg.style.opacity = '1';
-          checkInput();
         }, 300);
       }, 3000);
     }, 700);
