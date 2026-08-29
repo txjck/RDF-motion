@@ -160,17 +160,16 @@
     justify-content: flex-start;
     padding: 120px 0 0 32px;
     opacity: 0;
-    visibility: hidden;
+    pointer-events: none;
     transform: translateY(-10px);
     transition:
       opacity 0.4s var(--ae-ease),
-      visibility 0.4s var(--ae-ease),
       transform 0.4s var(--ae-ease);
   }
 
   .mobile-nav.is-open {
     opacity: 1;
-    visibility: visible;
+    pointer-events: auto;
     transform: translateY(0);
   }
 
@@ -227,7 +226,7 @@
     font-family: -apple-system, "SF Pro Display",
                  BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
     font-size: 30px;
-    font-weight: 700;
+    font-weight: 600;
     letter-spacing: -0.5px;
     transition:
       opacity 0.2s ease,
@@ -476,7 +475,7 @@
       align-items: center;
       padding: 0;
       opacity: 1;
-      visibility: visible;
+      pointer-events: auto;
       transform: none;
       transition: none;
     }
