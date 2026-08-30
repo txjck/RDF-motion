@@ -57,7 +57,7 @@
     max-width: 480px;
     margin: 0 auto;
     min-height: 100dvh;
-    padding: 0 24px max(80px, env(safe-area-inset-bottom, 40px)) 24px;
+    padding: 0 24px max(28px, env(safe-area-inset-bottom, 20px)) 24px;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -274,8 +274,8 @@
   /* ---------- Hero ---------- */
 
   .hero {
-    margin-top: 48px;
-    margin-bottom: 32px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 
     opacity: 0;
     animation: aeReveal 0.6s var(--ae-ease) 0.1s forwards;
@@ -376,7 +376,7 @@
 
   .field textarea {
     resize: none;
-    height: 180px;
+    height: 130px;
     padding: 12px 16px;
     line-height: 1.4;
   }
@@ -632,6 +632,10 @@
     .field:nth-child(4) {
       grid-column: 1 / -1;
       grid-row: 3;
+    }
+
+    .field textarea {
+      height: 180px;
     }
 
     .submit-wrap {
