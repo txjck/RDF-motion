@@ -121,14 +121,17 @@
     display: block;
     width: 100%;
     height: 2px;
+    /* Kolor zmieniony na czarny, aby był widoczny na białym tle */
     background-color: #000000;
     border-radius: 4px;
+    /* Brak opóźnień (lagów), płynne przejście transformacji */
     transition:
       transform 0.3s ease,
       opacity 0.3s ease,
       background-color 0.3s ease;
   }
 
+  /* Animacja otwierania (krzyżyk) */
   .burger-menu.is-open span:nth-child(1) {
     transform: translateY(7px) rotate(45deg);
   }
@@ -244,32 +247,6 @@
     z-index: 2;
   }
 
-  /* ---------- Oferta Hero Image ---------- */
-
-  .oferta-hero-wrap {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 0 24px 0; /* Creates balanced space above the heading */
-    opacity: 0;
-    transition: opacity 0.2s var(--ae-ease);
-  }
-
-  .view-in .oferta-hero-wrap {
-    opacity: 1;
-  }
-
-  .oferta-hero-img {
-    width: 100%;
-    aspect-ratio: 1 / 1; /* Makes width and height identical (square) */
-    object-fit: cover; /* Forces cutting from the sides instead of top/bottom */
-    object-position: center;
-    border-radius: 8px;
-    display: block;
-    box-shadow: none; /* Specifically removing shadow */
-  }
-
   /* ---------- Apple Motion View Elements ---------- */
 
   .page-title {
@@ -335,7 +312,7 @@
     stroke-width: 2.2;
   }
 
-  /* ---------- Options Box ---------- */
+  /* ---------- Options Box Simultaneous 0.2s Fade & Thicker Border ---------- */
 
   .options-list {
     display: flex;
@@ -489,19 +466,6 @@
       max-width: 400px;
     }
 
-    .oferta-hero-wrap {
-      margin: 0 0 32px 0;
-    }
-
-    .oferta-hero-img {
-      /* Resetting square constraints for PC to show full natural image */
-      width: 100%;
-      max-width: 100%;
-      height: auto; /* Not cut, displays in original ratio */
-      aspect-ratio: auto; /* Overrides mobile square */
-      border-radius: 12px;
-    }
-
     .submit-wrap {
       max-width: 400px;
     }
@@ -571,14 +535,6 @@
     <!-- ---------- WIDOK GŁÓWNY - OFERTA ---------- -->
 
     <div class="view active-view" id="view-oferta">
-
-      <div class="oferta-hero-wrap">
-        <img
-          src="https://raw.githubusercontent.com/txjck/RDF-motion/main/IMG_3881.JPG"
-          alt="Oferta"
-          class="oferta-hero-img"
-        >
-      </div>
 
       <h1 class="page-title">Oferta</h1>
 
@@ -773,6 +729,7 @@
   const navLinks = mobileNav.querySelectorAll('.mobile-nav-list a');
 
   function openMenu() {
+    // This part adds the 'is-open' class that triggers the CSS animation
     burgerToggle.classList.add('is-open');
     mobileNav.classList.add('is-open');
     burgerToggle.setAttribute('aria-expanded', 'true');
@@ -781,6 +738,7 @@
   }
 
   function closeMenu() {
+    // This part removes the 'is-open' class
     burgerToggle.classList.remove('is-open');
     mobileNav.classList.remove('is-open');
     burgerToggle.setAttribute('aria-expanded', 'false');
@@ -797,6 +755,7 @@
   navLinks.forEach(link => {
     link.addEventListener('click', closeMenu);
   });
+
 
   // ---------- APP FLOW LOGIC ----------
 
