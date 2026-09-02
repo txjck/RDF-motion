@@ -460,6 +460,10 @@
     transition: opacity 0.3s ease;
   }
 
+  .status-msg.is-error {
+    color: #FF6B6B;
+  }
+
   /* ---------- Dot Field ---------- */
 
   .dot-field {
@@ -769,6 +773,9 @@ aria-hidden="true"></canvas>
       ></textarea>
     </div>
 
+    <!-- Hidden field so the Formspree notification email has a clear subject -->
+    <input type="hidden" name="_subject" value="Nowa wiadomość z formularza kontaktowego">
+
     <div
       class="submit-wrap"
       id="submit-wrap"
@@ -839,11 +846,22 @@ aria-hidden="true"></canvas>
     }
   })();
 
+  // ==================================================================
+  // WYSYŁKA FORMULARZA — Formspree
+  //
+  // 1. Załóż darmowe konto na https://formspree.io
+  // 2. Utwórz nowy formularz i jako adres docelowy podaj: motionrdf@gmail.com
+  // 3. Formspree poda Ci ID formularza (wygląda np. tak: "mzzvokjg")
+  // 4. Wklej to ID poniżej zamiast "YOUR_FORM_ID"
+  // ==================================================================
+  const FORMSPREE_FORM_ID = 'YOUR_FORM_ID';
+  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/' + FORMSPREE_FORM_ID;
+
   const form = document.getElementById('contact-form');
   const submitBtn = document.getElementById('submit-btn');
   const statusMsg = document.getElementById('status-msg');
   const submitWrap = document.getElementById('submit-wrap');
-  const inputs = form.querySelectorAll('input, textarea');
+  const inputs = form.querySelectorAll('input[required], textarea[required]');
 
   function checkInput() {
     let allFilled = true;
@@ -862,29 +880,64 @@ aria-hidden="true"></canvas>
     input.addEventListener('input', checkInput);
   });
 
+  function showStatus(message, isError) {
+    statusMsg.textContent = message;
+    statusMsg.classList.toggle('is-error', !!isError);
+    statusMsg.style.opacity = '1';
+
+    setTimeout(function () {
+      statusMsg.style.opacity = '0';
+      setTimeout(function () {
+        statusMsg.textContent = '';
+        statusMsg.classList.remove('is-error');
+        statusMsg.style.opacity = '1';
+      }, 300);
+    }, 4000);
+  }
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
 
     if (submitBtn.classList.contains('disabled-btn')) return;
 
+    if (FORMSPREE_FORM_ID === 'YOUR_FORM_ID') {
+      showStatus('Formularz nie jest jeszcze skonfigurowany (brak ID Formspree).', true);
+      return;
+    }
+
     submitBtn.disabled = true;
     submitBtn.textContent = 'Wysyłanie...';
 
-    setTimeout(function () {
-      statusMsg.textContent = 'Wiadomość została wysłana!';
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Wyślij';
-      form.reset();
-      checkInput();
+    const formData = new FormData(form);
 
-      setTimeout(function () {
-        statusMsg.style.opacity = '0';
-        setTimeout(function () {
-          statusMsg.textContent = '';
-          statusMsg.style.opacity = '1';
-        }, 300);
-      }, 3000);
-    }, 700);
+    fetch(FORMSPREE_ENDPOINT, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    })
+      .then(function (response) {
+        if (response.ok) {
+          showStatus('Wiadomość została wysłana!', false);
+          form.reset();
+          checkInput();
+        } else {
+          return response.json().then(function (data) {
+            const errMsg = (data && data.errors && data.errors.length)
+              ? data.errors.map(function (er) { return er.message; }).join(', ')
+              : 'Coś poszło nie tak. Spróbuj ponownie.';
+            showStatus(errMsg, true);
+          });
+        }
+      })
+      .catch(function () {
+        showStatus('Brak połączenia. Spróbuj ponownie.', true);
+      })
+      .finally(function () {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Wyślij';
+      });
   });
 </script>
 
