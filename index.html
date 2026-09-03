@@ -94,7 +94,7 @@
   }
 
   .logo img {
-    height: 26px; /* Zmieniono z 32px na 26px */
+    height: 26px;
     width: auto;
     display: block;
   }
@@ -105,14 +105,24 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 20px; /* Zmieniono z 24px na 20px */
-    height: 14px; /* Zmieniono z 16px na 14px */
+    width: 20px;
+    height: 14px;
     background: transparent;
     border: none;
     cursor: pointer;
     padding: 0;
     z-index: 2002;
     position: relative;
+  }
+
+  /* Powiększenie obszaru kliknięcia/dotyku bez zmiany wielkości wizualnej */
+  .burger-menu::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    bottom: -15px;
+    left: -12px;
+    right: -12px;
   }
 
   .burger-menu span {
@@ -124,7 +134,6 @@
     transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
   }
 
-  /* Proporcjonalne dostosowanie transformacji dla wysokości 14px */
   .burger-menu.is-open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
   .burger-menu.is-open span:nth-child(2) { opacity: 0; }
   .burger-menu.is-open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
@@ -331,8 +340,6 @@
 
   </header>
 
-  <!-- ---------- NAVIGATION ---------- -->
-
   <nav class="mobile-nav" id="mobile-nav" aria-hidden="true">
     <ul class="mobile-nav-list">
       <li><a href="index.html">Start</a></li>
@@ -426,57 +433,4 @@
 
       count += currentSpeed;
 
-      var ampBoost = 1 + (interactionFactor * 0.28);
-      var introAmpBoost = 1 + (1 - globalEase) * 1.5;
-      var spinAngle = (1 - globalEase) * -0.4;
-      var cosA = Math.cos(spinAngle);
-      var sinA = Math.sin(spinAngle);
-      var maxDist = Math.sqrt(Math.pow(AMOUNTX / 2, 2) + Math.pow(AMOUNTY / 2, 2));
-
-      for (var ix = 0; ix < AMOUNTX; ix++) {
-        for (var iy = 0; iy < AMOUNTY; iy++) {
-          var dx = ix - AMOUNTX / 2;
-          var dy = iy - AMOUNTY / 2;
-          var rawX = dx * SEPARATION;
-          var rawZ = dy * SEPARATION;
-          var x = cosA * rawX - sinA * rawZ;
-          var z = sinA * rawX + cosA * rawZ;
-          var distCenter = Math.sqrt(dx * dx + dy * dy);
-          var distRatio = distCenter / maxDist;
-          var particleProgress = Math.max(0, Math.min(1, (globalIntroProgress - distRatio * 0.25) / 0.75));
-          var particleEase = 1 - Math.pow(1 - particleProgress, 4);
-
-          var targetY = (Math.sin((ix * 0.25) + count) * 40 + Math.sin((iy * 0.2) + count * 0.8) * 40) * ampBoost * introAmpBoost;
-          var introYOffset = (1 - particleEase) * 600;
-          var y = targetY + introYOffset;
-          var adjustedZ = z + cameraZ;
-
-          if (adjustedZ > 0) {
-            var scale = focalLength / adjustedZ;
-            var px = (x * scale) + (width / 2);
-            var py = ((y - cameraY) * scale) + (height / 2) - 100;
-
-            if (px > -50 && px < width + 50 && py > -50 && py < height + 50) {
-              var normalizedY = (y + 80) / 160;
-              var shade = Math.round(normalizedY * 80);
-              var baseAlpha = Math.max(0.1, 1.2 - (adjustedZ / 1000));
-              var alpha = baseAlpha * particleEase;
-
-              ctx.beginPath();
-              ctx.fillStyle = 'rgba(' + shade + ', ' + shade + ', ' + shade + ', ' + alpha.toFixed(2) + ')';
-              ctx.arc(px, py, RADIUS, 0, Math.PI * 2);
-              ctx.fill();
-            }
-          }
-        }
-      }
-
-      requestAnimationFrame(draw);
-    }
-
-    requestAnimationFrame(draw);
-  })();
-</script>
-
-</body>
-</html>
+      var ampBoost = 1 + (
