@@ -7,9 +7,9 @@
 
 <style>
   :root {
-    --yellow: #ffffff;
-    --bg: #000000;
-    --text-white: #ffffff;
+    --bg: #ffffff;
+    --text-color: #000000;
+    --blue: #0071E3;
     --gray-bg: #E5E5EA;
     --gray-text: #8E8E93;
     --ae-ease: cubic-bezier(0.16, 1, 0.3, 1);
@@ -25,7 +25,7 @@
     margin: 0;
     padding: 0;
     background: var(--bg);
-    color: var(--text-white);
+    color: var(--text-color);
     font-family: -apple-system, "SF Pro Text", "SF Pro Display",
                  BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -44,7 +44,7 @@
     right: -10%;
     width: 350px;
     height: 350px;
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(0, 0, 0, 0.04);
     filter: blur(90px);
     border-radius: 50%;
     z-index: 0;
@@ -138,7 +138,7 @@
     display: block;
     width: 100%;
     height: 2px;
-    background-color: #ffffff;
+    background-color: #000000;
     border-radius: 4px;
     transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
   }
@@ -196,7 +196,7 @@
     right: -15%;
     width: 320px;
     height: 320px;
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(0, 0, 0, 0.04);
     filter: blur(100px);
     border-radius: 50%;
     pointer-events: none;
@@ -248,7 +248,7 @@
   .mobile-nav-list a,
   .mobile-nav-list button {
     display: inline-block;
-    color: var(--text-white);
+    color: var(--text-color);
     text-decoration: none;
     background: transparent;
     border: none;
@@ -275,7 +275,7 @@
 
   .mobile-nav-list li.active a,
   .mobile-nav-list li.active button {
-    color: var(--text-white);
+    color: var(--text-color);
   }
 
   /* ---------- Hero ---------- */
@@ -289,10 +289,11 @@
   }
 
   .hero h1 {
-    color: var(--yellow);
-    font-size: 38px;
+    color: var(--text-color);
+    font-size: clamp(20px, 6.5vw, 30px);
     line-height: 1.15;
     font-weight: 600;
+    white-space: nowrap;
 
     margin: 0;
     letter-spacing: -0.5px;
@@ -303,10 +304,10 @@
   .selection-summary {
     margin: 0 0 28px 0;
     padding: 14px 16px;
-    background: #0F0F0F;
+    background: #F5F5F7;
     border-radius: 10px;
     font-size: 14px;
-    color: #D9D9D9;
+    color: #3C3C43;
     line-height: 1.4;
     display: none;
 
@@ -315,7 +316,7 @@
   }
 
   .selection-summary b {
-    color: #ffffff;
+    color: var(--text-color);
   }
 
   /* ---------- Form ---------- */
@@ -353,26 +354,26 @@
   .field label {
     font-size: 17px;
     font-weight: 500;
-    color: #D9D9D9;
+    color: #666666;
     padding-left: 2px;
   }
 
   .field input,
   .field textarea {
-    background: #0F0F0F;
-    border: 1.5px solid transparent;
+    background: #ffffff;
+    border: 1px solid #86868B;
     border-radius: 8px;
 
     font-size: 16px;
     font-weight: 400;
 
-    color: var(--text-white);
+    color: var(--text-color);
     font-family: inherit;
 
     outline: none;
     width: 100%;
 
-    transition: border-color 0.2s ease;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
     box-shadow: none;
   }
 
@@ -390,13 +391,14 @@
 
   .field input::placeholder,
   .field textarea::placeholder {
-    color: rgba(255, 255, 255, 0.3);
+    color: var(--gray-text);
     font-weight: 400;
   }
 
   .field input:focus,
   .field textarea:focus {
-    border-color: transparent;
+    border-color: var(--blue);
+    background: rgba(0, 113, 227, 0.03);
   }
 
   /* ---------- Submit Button ---------- */
@@ -414,7 +416,7 @@
     width: 100%;
     height: 42px;
 
-    background: #0071E3;
+    background: var(--blue);
     color: #ffffff;
 
     border: none;
@@ -430,18 +432,20 @@
     transition:
       background-color 0.3s ease,
       color 0.3s ease,
+      border-color 0.3s ease,
       opacity 0.2s ease;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    box-shadow: 0 4px 15px rgba(0, 113, 227, 0.2);
+    box-shadow: none;
   }
 
   .submit-btn.disabled-btn {
-    background: #2B2B2B;
-    color: #868686;
+    background: #ffffff;
+    color: #000000;
+    border: 1px solid #86868B;
     cursor: not-allowed;
     box-shadow: none;
   }
@@ -462,43 +466,13 @@
     margin-top: 14px;
     min-height: 18px;
 
-    color: var(--yellow);
+    color: var(--blue);
 
     transition: opacity 0.3s ease;
   }
 
   .status-msg.is-error {
-    color: #FF6B6B;
-  }
-
-  /* ---------- Dot Field ---------- */
-
-  .dot-field {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-
-    width: 100%;
-    height: min(65vh, 600px);
-
-    z-index: 0;
-    display: block;
-    pointer-events: none;
-
-    -webkit-mask-image: linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgba(0,0,0,0.6) 30%,
-      #000 80%
-    );
-
-    mask-image: linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgba(0,0,0,0.6) 30%,
-      #000 80%
-    );
+    color: #FF3B30;
   }
 
   /* ==========================================================
@@ -606,10 +580,6 @@
       text-align: center;
     }
 
-    .hero h1 br {
-      display: none;
-    }
-
     .selection-summary {
       max-width: 414px;
       margin: 0 auto 37px auto;
@@ -668,17 +638,12 @@
 
 <div class="ambient-glow"></div>
 
-<canvas
-id="dotField"
-class="dot-field"
-aria-hidden="true"></canvas>
-
 <div class="page">
 
   <header class="header">
     <div class="logo">
       <img
-        src="https://uploads.onecompiler.io/44h4mcb6e/44uj3jqmd/Groupewqeqw%20267.png"
+        src="https://uploads.onecompiler.io/44h4mcb6e/44zaxcjz7/Group%204ewqeqwe39.png"
         alt="Logo"
       >
     </div>
@@ -719,7 +684,7 @@ aria-hidden="true"></canvas>
 
   <section class="hero">
     <h1>
-      Skontaktuj się z<br>nami:
+      Skontaktuj się z nami:
     </h1>
   </section>
 
@@ -940,128 +905,6 @@ aria-hidden="true"></canvas>
         submitBtn.textContent = 'Wyślij';
       });
   });
-</script>
-
-<script>
-  (function () {
-    var canvas = document.getElementById('dotField');
-    if (!canvas || !canvas.getContext) {
-      return;
-    }
-
-    var ctx = canvas.getContext('2d');
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    var width = 0;
-    var height = 0;
-    var AMOUNTX = 65;
-    var AMOUNTY = 50;
-    var SEPARATION = 35;
-    var RADIUS = 1.15;
-    var count = 0;
-    var interactionPulse = 0;
-    var interactionFactor = 0;
-    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    var startTime = Date.now();
-    var introDuration = 3500;
-
-    window.triggerWaveInteraction = function () {
-      interactionPulse = Math.min(interactionPulse + 0.6, 1.4);
-    };
-
-    document.addEventListener('input', function (e) {
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
-        window.triggerWaveInteraction();
-      }
-    });
-
-    document.addEventListener('click', function (e) {
-      if (e.target.closest('button') || e.target.closest('.submit-btn') || e.target.closest('.burger-menu')) {
-        window.triggerWaveInteraction();
-      }
-    });
-
-    function resize() {
-      var rect = canvas.getBoundingClientRect();
-      width = rect.width;
-      height = rect.height;
-      canvas.width = Math.round(width * dpr);
-      canvas.height = Math.round(height * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    }
-
-    window.addEventListener('resize', resize);
-    resize();
-
-    function draw() {
-      ctx.clearRect(0, 0, width, height);
-      var now = Date.now();
-      var elapsed = now - startTime;
-      var globalIntroProgress = Math.min(elapsed / introDuration, 1);
-      var globalEase = 1 - Math.pow(1 - globalIntroProgress, 4);
-
-      interactionPulse *= 0.9;
-      interactionFactor += (interactionPulse - interactionFactor) * 0.07;
-
-      var focalLength = 350;
-      var cameraZ = 700 + (1 - globalEase) * 600;
-      var cameraY = -50 - (1 - globalEase) * 200;
-      var baseSpeed = reduceMotion ? 0.002 : 0.008;
-      var speedMultiplier = 1 + (1 - globalEase) * 4;
-      var currentSpeed = (baseSpeed + (interactionFactor * 0.004)) * speedMultiplier;
-
-      count += currentSpeed;
-
-      var ampBoost = 1 + (interactionFactor * 0.28);
-      var introAmpBoost = 1 + (1 - globalEase) * 1.5;
-      var spinAngle = (1 - globalEase) * -0.4;
-      var cosA = Math.cos(spinAngle);
-      var sinA = Math.sin(spinAngle);
-      var maxDist = Math.sqrt(Math.pow(AMOUNTX / 2, 2) + Math.pow(AMOUNTY / 2, 2));
-
-      for (var ix = 0; ix < AMOUNTX; ix++) {
-        for (var iy = 0; iy < AMOUNTY; iy++) {
-          var dx = ix - AMOUNTX / 2;
-          var dy = iy - AMOUNTY / 2;
-          var rawX = dx * SEPARATION;
-          var rawZ = dy * SEPARATION;
-          var x = cosA * rawX - sinA * rawZ;
-          var z = sinA * rawX + cosA * rawZ;
-          var distCenter = Math.sqrt(dx * dx + dy * dy);
-          var distRatio = distCenter / maxDist;
-          var particleProgress = Math.max(0, Math.min(1, (globalIntroProgress - distRatio * 0.25) / 0.75));
-          var particleEase = 1 - Math.pow(1 - particleProgress, 4);
-
-          var targetY = (Math.sin((ix * 0.25) + count) * 40 + Math.sin((iy * 0.2) + count * 0.8) * 40) * ampBoost * introAmpBoost;
-          var introYOffset = (1 - particleEase) * 600;
-          var y = targetY + introYOffset;
-          var adjustedZ = z + cameraZ;
-
-          if (adjustedZ > 0) {
-            var scale = focalLength / adjustedZ;
-            var px = (x * scale) + (width / 2);
-            var py = ((y - cameraY) * scale) + (height / 2) - 100;
-
-            if (px > -50 && px < width + 50 && py > -50 && py < height + 50) {
-              var normalizedY = (y + 80) / 160;
-              var shade = Math.round(255 - (normalizedY * 220));
-              var baseAlpha = Math.max(0.1, 1.2 - (adjustedZ / 1000));
-              var alpha = baseAlpha * particleEase;
-
-              ctx.beginPath();
-              ctx.fillStyle = 'rgba(' + shade + ', ' + shade + ', ' + shade + ', ' + alpha.toFixed(2) + ')';
-              ctx.arc(px, py, RADIUS, 0, Math.PI * 2);
-              ctx.fill();
-            }
-          }
-        }
-      }
-
-      requestAnimationFrame(draw);
-    }
-
-    requestAnimationFrame(draw);
-  })();
 </script>
 
 </body>
